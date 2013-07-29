@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<info>
+    <id>checksum</id>
+    <name>Checksum</name>
+    <description>Creating a md5 checksum of a file.</description>
+    <version>1.0</version>
+    <licence>AGPL</licence>
+    <author>westberliner</author>
+    <require>5</require>
+    <types>
+      <filesystem/>
+    </types>
+    <version>0.1</version>
+</info>
