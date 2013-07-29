@@ -23,11 +23,12 @@
     },
     load: 'Creating MD5 Checksum <img src="'+OC.imagePath('core','loading.gif')+'">',
     ajax: function(file) {
+      var data = {source: file, dir: $('#dir').val()+'/'};
       $.ajax({
       type: 'GET',
       url: OC.filePath('checksum', 'ajax', 'checksum.php'),
       dataType: 'json',
-      data: { source: file },
+      data: data,
       async: false,
       success: function(info) {
         dom = $('.checksum-hashing').first();
