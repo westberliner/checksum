@@ -1,6 +1,8 @@
 <?php
 // chech if app is enabled
 OCP\JSON::checkAppEnabled('checksum');
+OCP\JSON::checkLoggedIn();
+OCP\JSON::callCheck();
 
 // get file
 $source = $_GET['source'];

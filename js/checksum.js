@@ -32,10 +32,9 @@
       async: false,
       success: function(info) {
         dom = $('.checksum-hashing').first();
-        dom.html('MD5: '+info.data[0]);
+        dom.text('MD5: '+info.data[0]);
         dom.addClass('chcksum-hashed');
         dom.removeClass('checksum-hashing');
-        alert(dom.html());
       }
     });
     }
