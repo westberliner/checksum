@@ -8,6 +8,7 @@ Installation
 ------------
 
 - Copy the checksum folder in the app directory of owncloud.
+- If not already done, rename the app-folder to "checksum" - causes overwise an sql error.
 - Enable this app in the admin interface.
 
 
