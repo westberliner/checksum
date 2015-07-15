@@ -12,7 +12,12 @@
       };
     },
     check: function(file) {
-      dom = this.elem.find('.action[data-action=checksum]');
+      var elem = this.elem;
+      if(!elem){
+        elem = this.currentFile;
+      }
+      
+      dom = elem.find('.action[data-action=checksum]');
       if(!dom.hasClass('chcksum-hashed')) {
         dom.html(checksum.load);
         dom.addClass('checksum-hashing');
@@ -23,16 +28,18 @@
     },
     load: 'Creating MD5 Checksum <img src="'+OC.imagePath('core','loading.gif')+'">',
     ajax: function(file) {
+
+      var url = OC.generateUrl('/apps/checksum/checksum');
       var data = {source: file, dir: $('#dir').val()+'/'};
       $.ajax({
       type: 'GET',
-      url: OC.filePath('checksum', 'ajax', 'checksum.php'),
+      url: url,
       dataType: 'json',
       data: data,
-      async: false,
+      async: true,
       success: function(info) {
         dom = $('.checksum-hashing').first();
-        dom.text('MD5: '+info.data[0]);
+        dom.text('MD5: '+info.checksum);
         dom.addClass('chcksum-hashed');
         dom.removeClass('checksum-hashing');
       }
