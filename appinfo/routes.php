@@ -1,6 +1,7 @@
 <?php
+/**
+ * adding route for ajax callback
+ */
 return ['routes' => [
-    ['name' => 'checksum#calculate', 'url' => '/checksum', 'verb' => 'GET']
+    ['name' => 'checksum#check', 'url' => '/check', 'verb' => 'GET']
 ]];
-
-?>

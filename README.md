@@ -15,4 +15,10 @@ Installation
 Usage
 -----
 
-An info-icon appears on every file. Click it, to get the md5-hash.
+Open the details view. There should be a new tab called "Checksum". By opening the tab it will generate a md5 hash for you.
+
+
+Notice
+------
+
+I only tested the app for the current version of owncloud (9.x). I tried to use the current api as much as possible. It should be safe for future versions.

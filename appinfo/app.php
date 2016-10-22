@@ -1,8 +1,13 @@
 <?php
 /**
- * Dependencies
+ * Load Javascrip
  */
-// Jquery
-//OCP\Util::addScript("3rdparty", "chosen/chosen.jquery.min");
-// checksum script
-OCP\Util::addScript('checksum', "checksum" );
+
+use OCP\Util;
+
+$eventDispatcher = \OC::$server->getEventDispatcher();
+$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', function(){
+    Util::addScript('checksum', 'checksum.tabview' );
+    Util::addScript('checksum', 'checksum.plugin' );
+});
+
