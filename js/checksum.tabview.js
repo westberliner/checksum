@@ -48,6 +48,15 @@
      * ajax callback for generating md5 hash
      */
     check: function(fileInfo) {
+      // skip call if fileInfo is null
+      if(null == fileInfo) {
+        _self.updateDisplay({
+          response: 'error',
+          msg: t('checksum', 'No fileinfo provided.')
+        });
+
+        return;
+      }
 
       var url = OC.generateUrl('/apps/checksum/check'),
           data = {source: fileInfo.getFullPath()},
