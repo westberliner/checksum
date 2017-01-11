@@ -23,15 +23,24 @@ class ChecksumController extends Controller {
 		/**
 		 * callback function to get md5 hash of a file
 		 * @param (string) $source - filename
-		 * @param (string) $dir - folder to file
+		 * @param (string) $type - hash algorithm type
 		 */
-	  public function check($source) {
+	  public function check($source, $type) {
 
-				if($md5 = $this->getHash($source)){
+	  		if(!$this->checkAlgorithmType($type)) {
+	  			return new JSONResponse(
+							array(
+									'response' => 'error',
+									'msg' => $this->language->t('This is not a valid algorithm type.')
+							)
+					);
+	  		}
+
+				if($hash = $this->getHash($source, $type)){
 						return new JSONResponse(
 								array(
 										'response' => 'success',
-										'msg' => $md5
+										'msg' => $hash
 								)
 						);
 				} else {
@@ -45,14 +54,27 @@ class ChecksumController extends Controller {
 
 	  }
 
-	  protected function getHash($source) {
+	  protected function getHash($source, $type) {
 
 	  	if($info = Filesystem::getLocalFile($source)) {
-	  			return md5_file($info);
+	  			return hash_file($type, $info);
 	  	}
 
 	  	return false;
 	  }
 
+	  protected function checkAlgorithmType($type) {
+	  	return in_array($type, $this->getAllowedAlgorithmTypes());
+	  }
+
+	  protected function getAllowedAlgorithmTypes() {
+	  	return array(
+				'md5',
+				'sha1',
+				'sha256',
+				'sha512',
+				'crc32'
+			);
+		}
 }
 

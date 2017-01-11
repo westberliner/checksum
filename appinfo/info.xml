@@ -2,8 +2,8 @@
 <info>
     <id>checksum</id>
     <name>Checksum</name>
-    <description>Creating a md5 checksum of a file.</description>
-    <version>0.2</version>
+    <description>Creating a hash checksum of a file.</description>
+    <version>0.3</version>
     <licence>AGPL</licence>
     <author>westberliner</author>
     <types>

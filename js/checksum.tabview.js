@@ -20,14 +20,25 @@
      * @abstract
      */
     render: function() {
+      this._renderSelectList(this.$el);
 
-      this.$el.html('<div style="text-align:center;" class="get-md5"><p><img src="'
-        + OC.imagePath('core','loading.gif')
-        + '"><br><br></p><p>'
-        + t('checksum', 'Creating MD5 Checksum ...')
-        + '</p></div>');
-      this.check(this.getFileInfo());
+      this.delegateEvents({
+        'change #choose-algorithm': '_onChangeEvent'
+      });
 
+    },
+
+    _renderSelectList: function($el) {
+      $el.html('<div class="get-checksum">'
+        + '<select id="choose-algorithm">'
+          + '<option value="">' + t('checksum', 'Choose Algorithm') + '</option>'
+          + '<option value="md5">MD5</option>'
+          + '<option value="sha1">SHA1</option>'
+          + '<option value="sha256">SHA256</option>'
+          + '<option value="sha512">SHA512</option>'
+          + '<option value="crc32">CRC32</option>'
+        + '</select></div>'
+      );
     },
 
     /**
@@ -47,7 +58,7 @@
     /**
      * ajax callback for generating md5 hash
      */
-    check: function(fileInfo) {
+    check: function(fileInfo, algorithmType) {
       // skip call if fileInfo is null
       if(null == fileInfo) {
         _self.updateDisplay({
@@ -59,7 +70,7 @@
       }
 
       var url = OC.generateUrl('/apps/checksum/check'),
-          data = {source: fileInfo.getFullPath()},
+          data = {source: fileInfo.getFullPath(), type: algorithmType},
           _self = this;
       $.ajax({
         type: 'GET',
@@ -68,7 +79,7 @@
         data: data,
         async: true,
         success: function(data) {
-          _self.updateDisplay(data);
+          _self.updateDisplay(data, algorithmType);
         }
       });
 
@@ -77,16 +88,31 @@
     /**
      * display message from ajax callback
      */
-    updateDisplay: function(data) {
+    updateDisplay: function(data, algorithmType) {
 
       var msg = '';
       if('success' == data.response) {
-        msg = 'MD5: ' + data.msg;
+        msg = algorithmType + ': ' + data.msg;
       }
       if('error' == data.response) {
         msg = data.msg;
       }
-      this.$el.find('.get-md5').html(msg);
+      this.$el.find('.get-checksum').html(msg);
+    },
+
+    /**
+     * changeHandler
+     */
+    _onChangeEvent: function(ev) {
+      var algorithmType = $(ev.currentTarget).val();
+      if(algorithmType != '') {
+        this.$el.html('<div style="text-align:center; word-wrap:break-word;" class="get-checksum"><p><img src="'
+          + OC.imagePath('core','loading.gif')
+          + '"><br><br></p><p>'
+          + t('checksum', 'Creating Checksum ...')
+          + '</p></div>');
+        this.check(this.getFileInfo(), algorithmType);
+      }
     }
 
   });

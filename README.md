@@ -15,7 +15,7 @@ Installation
 Usage
 -----
 
-Open the details view. There should be a new tab called "Checksum". By opening the tab it will generate a md5 hash for you.
+Open the details view. There should be a new tab called "Checksum". Select a hashalgorithm and it will try to generate a hash.
 
 
 Notice
