@@ -93,11 +93,17 @@
       var msg = '';
       if('success' == data.response) {
         msg = algorithmType + ': ' + data.msg;
+        msg += '<br><br><a id="reload-checksum" class="icon icon-history" style="display:block" href=""></a>';
+
+        this.delegateEvents({
+          'click #reload-checksum': '_onReloadEvent'
+        });
       }
       if('error' == data.response) {
         msg = data.msg;
       }
       this.$el.find('.get-checksum').html(msg);
+
     },
 
     /**
@@ -113,6 +119,14 @@
           + '</p></div>');
         this.check(this.getFileInfo(), algorithmType);
       }
+    },
+
+    _onReloadEvent: function(ev) {
+      ev.preventDefault();
+      this._renderSelectList(this.$el);
+      this.delegateEvents({
+        'change #choose-algorithm': '_onChangeEvent'
+      });
     }
 
   });
