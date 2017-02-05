@@ -22,6 +22,7 @@ class ChecksumController extends Controller {
 
 		/**
 		 * callback function to get md5 hash of a file
+		 * @NoAdminRequired
 		 * @param (string) $source - filename
 		 * @param (string) $type - hash algorithm type
 		 */
