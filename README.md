@@ -1,12 +1,19 @@
 Checksum
 ========
 
-**Plugin for [Nextcloud](https://nextcloud.com) and owncloud to create md5-hashes of files.**
+**Plugin for [Nextcloud](https://nextcloud.com) and [ownCloud](https://owncloud.org) to create hashes of files.**
 
 Installation
 ------------
 
+**Nextcloud**
+
 In your Instance, simply navigate to »Apps«, choose the category »Files«, find the Checksum app and enable it.
+
+**ownCloud**
+- Copy the checksum folder in the app directory of owncloud.
+- If not already done, rename the app-folder to "checksum" - causes overwise an sql error.
+- Enable this app in the admin interface.
 
 Usage
 -----
