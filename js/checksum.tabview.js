@@ -35,6 +35,7 @@
           + '<option value="md5">MD5</option>'
           + '<option value="sha1">SHA1</option>'
           + '<option value="sha256">SHA256</option>'
+          + '<option value="sha384">SHA384</option>'
           + '<option value="sha512">SHA512</option>'
           + '<option value="crc32">CRC32</option>'
         + '</select></div>'

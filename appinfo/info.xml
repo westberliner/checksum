@@ -5,7 +5,7 @@
     <name>Checksum</name>
     <summary>Creating a hash checksum of a file.</summary>
     <description>Creating a hash checksum of a file.</description>
-    <version>0.3.1</version>
+    <version>0.3.3</version>
     <licence>agpl</licence>
     <author>westberliner</author>
     <types>
