@@ -94,15 +94,17 @@
       var msg = '';
       if('success' == data.response) {
         msg = algorithmType + ': ' + data.msg;
-        msg += '<br><br><a id="reload-checksum" class="icon icon-history" style="display:block" href=""></a>';
-
-        this.delegateEvents({
-          'click #reload-checksum': '_onReloadEvent'
-        });
       }
       if('error' == data.response) {
         msg = data.msg;
       }
+
+      msg += '<br><br><a id="reload-checksum" class="icon icon-history" style="display:block" href=""></a>';
+
+      this.delegateEvents({
+        'click #reload-checksum': '_onReloadEvent'
+      });
+
       this.$el.find('.get-checksum').html(msg);
 
     },

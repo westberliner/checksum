@@ -27,12 +27,11 @@ class ChecksumController extends Controller {
 		 * @param (string) $type - hash algorithm type
 		 */
 	  public function check($source, $type) {
-
 	  		if(!$this->checkAlgorithmType($type)) {
 	  			return new JSONResponse(
 							array(
 									'response' => 'error',
-									'msg' => $this->language->t('This is not a valid algorithm type.')
+									'msg' => $this->language->t('The algorithm type "%s" is not a valid or supported algorithm type.', array($type))
 							)
 					);
 	  		}
@@ -65,7 +64,8 @@ class ChecksumController extends Controller {
 	  }
 
 	  protected function checkAlgorithmType($type) {
-	  	return in_array($type, $this->getAllowedAlgorithmTypes());
+	  	$list_algos = hash_algos();
+	  	return in_array($type, $this->getAllowedAlgorithmTypes()) && in_array($type, $list_algos);
 	  }
 
 	  protected function getAllowedAlgorithmTypes() {
