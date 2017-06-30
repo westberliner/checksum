@@ -5,7 +5,7 @@
     <name>Checksum</name>
     <summary>Creating a hash checksum of a file.</summary>
     <description>
-        Creating a hash checksum of a file.
+        Allows users to create a hash checksum of a file.
         Possible algorithms are md5, sha1, sha256, sha384, sha512 and crc32.
 
         Just open the details view of the file (Sidebar). There should be a new tab called "Checksum".
