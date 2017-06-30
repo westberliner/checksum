@@ -12,6 +12,7 @@
         Select a algorithm and it will try to generate a hash.
         If you want an other algorithm, just click on the reload button.
     </description>
+    <screenshot>https://raw.githubusercontent.com/westberliner/owncloud-checksum/master/screenshots/checksum.gif</screenshot>
     <documentation>
         <user>https://github.com/westberliner/owncloud-checksum/blob/v0.3.4/README.md</user>
         <admin>https://github.com/westberliner/owncloud-checksum/blob/v0.3.4/README.md</admin>
