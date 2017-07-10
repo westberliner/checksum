@@ -3,6 +3,8 @@ Checksum
 
 **Plugin for [Nextcloud](https://nextcloud.com) and [ownCloud](https://owncloud.org) to create hashes of files.**
 
+![animation](screenshots/checksum.gif)
+
 Installation
 ------------
 
