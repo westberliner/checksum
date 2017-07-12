@@ -14,8 +14,8 @@
     </description>
     <screenshot>https://raw.githubusercontent.com/westberliner/owncloud-checksum/master/screenshots/checksum.gif</screenshot>
     <documentation>
-        <user>https://github.com/westberliner/owncloud-checksum/blob/v0.3.4/README.md</user>
-        <admin>https://github.com/westberliner/owncloud-checksum/blob/v0.3.4/README.md</admin>
+        <user>https://github.com/westberliner/owncloud-checksum/blob/master/README.md</user>
+        <admin>https://github.com/westberliner/owncloud-checksum/blob/master/README.md</admin>
     </documentation>
     <version>0.3.5</version>
     <licence>agpl</licence>
