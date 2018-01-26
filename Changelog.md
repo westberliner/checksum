@@ -1,6 +1,9 @@
 Changelog
 =========
 
+**0.3.5**
+- updated info.xml > bump nextcloud support to version 13
+
 **0.3.4**
 - updated info.xml
 - added error handling if hash algorithm is not supported by server
