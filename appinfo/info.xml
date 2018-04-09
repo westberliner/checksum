@@ -17,7 +17,7 @@
         <user>https://github.com/westberliner/owncloud-checksum/blob/master/README.md</user>
         <admin>https://github.com/westberliner/owncloud-checksum/blob/master/README.md</admin>
     </documentation>
-    <version>v0.4.0</version>
+    <version>0.4.0</version>
     <licence>agpl</licence>
     <author>westberliner</author>
     <types>
