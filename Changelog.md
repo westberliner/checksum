@@ -1,5 +1,7 @@
 Changelog
 =========
+**0.4.1**
+- updated info.xml > bump nextcloud support to version 14 (thx to @ArisenDrake)
 
 **0.3.6**
 - updated info.xml > bump nextcloud support to version 13 (thx to @Eisfunke)
