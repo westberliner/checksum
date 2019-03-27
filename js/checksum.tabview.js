@@ -15,6 +15,15 @@
     },
 
     /**
+     * get icon of tab
+     */
+    getIcon: function() {
+
+      return 'icon-info';
+
+    },
+
+    /**
      * Renders this details view
      *
      * @abstract
