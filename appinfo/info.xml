@@ -12,7 +12,7 @@
         Select a algorithm and it will try to generate a hash.
         If you want an other algorithm, just click on the reload button.
     </description>
-    <version>0.4.2</version>
+    <version>0.4.3</version>
     <licence>agpl</licence>
     <author>westberliner</author>
     <types>
@@ -29,6 +29,6 @@
     <screenshot>https://raw.githubusercontent.com/westberliner/owncloud-checksum/master/screenshots/checksum.gif</screenshot>
     <dependencies>
         <owncloud min-version="9.0" max-version="11" />
-        <nextcloud min-version="9" max-version="16" />
+        <nextcloud min-version="9" max-version="17" />
     </dependencies>
 </info>
