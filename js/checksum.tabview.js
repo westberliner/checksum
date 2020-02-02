@@ -19,7 +19,7 @@
      */
     getIcon: function() {
 
-      return 'icon-info';
+      return 'icon-category-auth';
 
     },
 
