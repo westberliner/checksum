@@ -1,5 +1,19 @@
 Changelog
 =========
+
+**0.4.5**
+- updated info.xml > bump nextcloud support to version 19 (thx to @enoch85)
+- changed app icon (thx to @The-EDev)
+
+**0.4.4**
+- updated info.xml > bump nextcloud support to version 18 (thx to @xXpc-freakXx)
+
+**0.4.3**
+- Add tab icon (thx to @confusedguy9)
+
+**0.4.2**
+- updated info.xml > bump nextcloud support to version 15
+
 **0.4.1**
 - updated info.xml > bump nextcloud support to version 14 (thx to @ArisenDrake)
 
