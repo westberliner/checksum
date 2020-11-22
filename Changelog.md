@@ -1,6 +1,10 @@
 Changelog
 =========
 
+**1.0.0**
+- Bump nextcloud support to 21
+- Drop owncloud support
+
 **0.4.5**
 - updated info.xml > bump nextcloud support to version 19 (thx to @enoch85)
 - changed app icon (thx to @The-EDev)
