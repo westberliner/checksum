@@ -5,7 +5,6 @@ declare(strict_types=1);
 /**
  * @copyright Copyright (C) 2020 Richard Steinmetz <richard@steinmetz.cloud>
  *
- * @author westberliner
  * @author Richard Steinmetz <richard@steinmetz.cloud>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +21,20 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-return [
-	'routes' => [
-		['name' => 'checksum#check', 'url' => '/check', 'verb' => 'GET']
-	]
-];
+namespace OCA\Checksum\Listener;
+
+use OCA\Files\Event\LoadAdditionalScriptsEvent;
+use OCP\EventDispatcher\Event;
+use OCP\EventDispatcher\IEventListener;
+use OCP\Util;
+
+class LoadAdditionalScriptsListener implements IEventListener {
+	public function handle(Event $event): void {
+		if (!($event instanceof LoadAdditionalScriptsEvent)) {
+			return;
+		}
+
+		Util::addScript('checksum', 'checksum.tabview');
+		Util::addScript('checksum', 'checksum.plugin');
+	}
+}
