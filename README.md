@@ -7,7 +7,7 @@ Sidebar plugin for [Nextcloud](https://nextcloud.com) to create hashes of files.
 
 ## Installation
 
-Clone this repository into your apps folder and checkout the desired tag.
+Download the archive of the most recent tag or clone this repository into your apps folder and checkout the desired tag.
 
 
 ## Usage
@@ -20,4 +20,4 @@ Possible algorithms are md5, sha1, sha256, sha384, sha512 and crc32.
 
 ## Compatibility
 
-I only tested the app for the Nextcloud from v20 to v21 and php v7.4.
+I only tested the app on Nextcloud v20 to v21 and php v7.4.
