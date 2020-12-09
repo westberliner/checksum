@@ -14,7 +14,7 @@
 		Open the details view of the file (sidebar). There should be a new tab called "Checksum".
 		Select an algorithm and it will try to generate a hash.
 	</description>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<licence>agpl</licence>
 	<author>westberliner</author>
 	<author>Richard Steinmetz</author>

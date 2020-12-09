@@ -117,13 +117,14 @@ class ChecksumController extends Controller {
 			return null;
 		}
 
-		$mount = $this->mountManager->find($user->getUID());
+		$absPath = $user->getUID() . '/files/' . $source;
+		$mount = $this->mountManager->find($absPath);
 		if (!$mount) {
 			return null;
 		}
 
-		$path = '/files/' . $source;
-		$file = $mount->getStorage()->fopen($path, 'rb');
+		$internalPath = $mount->getInternalPath($absPath);
+		$file = $mount->getStorage()->fopen($internalPath, 'rb');
 		if (!$file) {
 			return null;
 		}

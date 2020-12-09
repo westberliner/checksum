@@ -1,6 +1,9 @@
 Changelog
 =========
 
+**1.0.1**
+- Improve path resolving
+
 **1.0.0**
 - Bump nextcloud support to 21
 - Drop owncloud support
