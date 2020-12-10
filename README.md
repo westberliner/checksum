@@ -27,5 +27,5 @@ Possible algorithms are md5, sha1, sha256, sha384, sha512 and crc32.
 Compatibility
 -------------
 
-- I only tested the app for the current version of owncloud (9.x) and Nextcloud from 10 to 19.
+- This app was only tested on Nextcloud v20 to v21 and php v7.4.
 - I tried to use the current api as much as possible. It should be safe for future versions.
