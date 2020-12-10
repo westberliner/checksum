@@ -1,6 +1,9 @@
 Changelog
 =========
 
+**1.0.0**
+- Checksum app with this version is now nextcloud only. Breaking changes enforcing this. Thx @st3iny for the pull request.
+
 **0.4.5**
 - updated info.xml > bump nextcloud support to version 19 (thx to @enoch85)
 - changed app icon (thx to @The-EDev)

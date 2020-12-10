@@ -1,21 +1,15 @@
 Checksum
 ========
 
-**Plugin for [Nextcloud](https://nextcloud.com) and [ownCloud](https://owncloud.org) to create hashes of files.**
+**Plugin for [Nextcloud](https://nextcloud.com) to create hashes of files.**
 
 ![animation](screenshots/checksum.gif)
 
 Installation
 ------------
 
-**Nextcloud**
-
 In your Instance, simply navigate to »Apps«, choose the category »Files«, find the Checksum app and enable it.
 
-**ownCloud**
-- Copy the checksum folder in the app directory of owncloud.
-- If not already done, rename the app-folder to "checksum" - causes overwise an sql error.
-- Enable this app in the admin interface.
 
 Usage
 -----
@@ -28,4 +22,4 @@ Compatibility
 -------------
 
 - This app was only tested on Nextcloud v20 to v21 and php v7.4.
-- I tried to use the current api as much as possible. It should be safe for future versions.
+- For older nextcloud versions check older releases.
