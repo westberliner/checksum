@@ -21,5 +21,5 @@ Possible algorithms are md5, sha1, sha256, sha384, sha512 and crc32.
 Compatibility
 -------------
 
-- This app was only tested on Nextcloud v20 to v21 and php v7.4.
+- This app was only tested on Nextcloud v20 to v21 and php v7.(2|4).
 - For older nextcloud versions check older releases.

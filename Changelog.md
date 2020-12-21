@@ -1,44 +1,47 @@
 Changelog
 =========
 
+**1.0.1**
+- Updated controller for backwards compatibility down to php7.2.
+
 **1.0.0**
-- Checksum app with this version is now nextcloud only. Breaking changes enforcing this. Thx @st3iny for the pull request.
+- Checksum app with this version is now nextcloud only. Breaking changes enforcing this. (thx to @st3iny)
 
 **0.4.5**
-- updated info.xml > bump nextcloud support to version 19 (thx to @enoch85)
-- changed app icon (thx to @The-EDev)
+- Updated info.xml > bump nextcloud support to version 19. (thx to @enoch85)
+- Changed app icon. (thx to @The-EDev)
 
 **0.4.4**
-- updated info.xml > bump nextcloud support to version 18 (thx to @xXpc-freakXx)
+- Updated info.xml > bump nextcloud support to version 18. (thx to @xXpc-freakXx)
 
 **0.4.3**
-- Add tab icon (thx to @confusedguy9)
+- Add tab icon. (thx to @confusedguy9)
 
 **0.4.2**
-- updated info.xml > bump nextcloud support to version 15
+- Updated info.xml > bump nextcloud support to version 15.
 
 **0.4.1**
-- updated info.xml > bump nextcloud support to version 14 (thx to @ArisenDrake)
+- Updated info.xml > bump nextcloud support to version 14. (thx to @ArisenDrake)
 
 **0.3.6**
-- updated info.xml > bump nextcloud support to version 13 (thx to @Eisfunke)
+- Updated info.xml > bump nextcloud support to version 13. (thx to @Eisfunke)
 
 **0.3.5**
-- changed the documentation-links to master (thx to @DJCrashdummy)
-- Adding gif to description (thx to @jospoortvliet)
+- Changed the documentation-links to master. (thx to @DJCrashdummy)
+- Adding gif to description. (thx to @jospoortvliet)
 
 **0.3.4**
-- updated info.xml
-- added error handling if hash algorithm is not supported by server
-- added reload button on ajax error response
+- Updated info.xml.
+- Added error handling if hash algorithm is not supported by server.
+- Added reload button on ajax error response.
 
 **0.3.3**
-- added sha384
+- Added sha384.
 
 **0.3.2**
-- updated readme
-- added changelog
+- Updated readme.
+- Added changelog.
 
 **0.3.1**
-- allow unprivileged users to create checksums
-- reload button
+- Allow unprivileged users to create checksums.
+- Reload button.

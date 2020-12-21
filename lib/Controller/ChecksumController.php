@@ -17,17 +17,17 @@ class ChecksumController extends Controller {
     /**
      * @var IL10N
      */
-    private IL10N $language;
+    private $language;
 
     /**
      * @var IMountManager
      */
-    private IMountManager $mountManager;
+    private $mountManager;
 
     /**
      * @var IUserSession
      */
-    private IUserSession $userSession;
+    private $userSession;
 
     /**
      * ChecksumController constructor.
