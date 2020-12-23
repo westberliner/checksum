@@ -1,0 +1,30 @@
+{
+  "name": "checksum",
+  "description": "Checksum app for Nextcloud",
+  "version": "1.1.0",
+  "author": "westberliner",
+  "license": "agpl",
+  "private": true,
+  "scripts": {
+    "build": "NODE_ENV=production webpack --config webpack.prod.js",
+    "dev": "NODE_ENV=development webpack --config webpack.dev.js",
+    "watch": "NODE_ENV=development webpack --config webpack.dev.js --watch"
+  },
+  "dependencies": {
+    "@nextcloud/axios": "^1.5.0",
+    "@nextcloud/router": "^1.2.0",
+    "core-js": "^3.8.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@nextcloud/browserslist-config": "^1.0.0",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.11.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-merge": "^5.7.2"
+  },
+  "browserslist": [
+    "extends @nextcloud/browserslist-config"
+  ]
+}

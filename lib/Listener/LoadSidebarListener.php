@@ -23,19 +23,19 @@ declare(strict_types=1);
 
 namespace OCA\Checksum\Listener;
 
-use OCA\Files\Event\LoadAdditionalScriptsEvent;
+use OCA\Checksum\AppInfo\Application;
+use OCA\Files\Event\LoadSidebar;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Util;
 
-class LoadAdditionalScriptsListener implements IEventListener {
+class LoadSidebarListener implements IEventListener {
 
     public function handle(Event $event): void {
-        if (!($event instanceof LoadAdditionalScriptsEvent)) {
+        if (!($event instanceof LoadSidebar)) {
             return;
         }
 
-        Util::addScript('checksum', 'checksum.tabview');
-        Util::addScript('checksum', 'checksum.plugin');
+        Util::addScript(Application::APP_ID, 'checksum.main');
     }
 }

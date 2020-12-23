@@ -1,7 +1,3 @@
-<?php
-
-declare(strict_types=1);
-
 /**
  * @copyright Copyright (C) 2020 Richard Steinmetz <richard@steinmetz.cloud>
  *
@@ -21,30 +17,37 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OCA\Checksum\AppInfo;
+import {translate as t} from '@nextcloud/l10n'
+import ChecksumTab from './ChecksumTab'
 
-use OCA\Checksum\Listener\LoadSidebarListener;
-use OCA\Files\Event\LoadSidebar;
-use OCP\AppFramework\App;
-use OCP\AppFramework\Bootstrap\IBootContext;
-use OCP\AppFramework\Bootstrap\IBootstrap;
-use OCP\AppFramework\Bootstrap\IRegistrationContext;
+let tabInstance = null
+const checksumTab = new OCA.Files.Sidebar.Tab({
+  id: 'checksumTabView',
+  name: t('checksum', 'Checksum'),
+  icon: 'icon-category-auth',
 
-class Application extends App implements IBootstrap {
-    public const APP_ID = 'checksum';
+  enabled(fileInfo) {
+    return fileInfo && !fileInfo.isDirectory()
+  },
 
-    public function __construct(array $urlParams = []) {
-        parent::__construct(self::APP_ID, $urlParams);
+  mount(el, fileInfo, context) {
+    if (!tabInstance) {
+      tabInstance = new ChecksumTab(el)
     }
+    tabInstance.render(fileInfo)
+  },
 
-    public function register(IRegistrationContext $context): void {
-        // Load scripts for sidebar.
-        $context->registerEventListener(
-            LoadSidebar::class,
-            LoadSidebarListener::class
-        );
-    }
+  update(fileInfo) {
+    tabInstance.render(fileInfo)
+  },
 
-    public function boot(IBootContext $context): void {
-    }
-}
+  destroy() {
+    tabInstance = null
+  },
+})
+
+window.addEventListener('DOMContentLoaded', function() {
+  if (OCA.Files && OCA.Files.Sidebar) {
+    OCA.Files.Sidebar.registerTab(checksumTab)
+  }
+})
