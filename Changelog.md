@@ -2,7 +2,7 @@ Changelog
 =========
 
 **1.1.0**
-- Upgrade frontend to vue.
+- Upgrade frontend to vue. (thx to @st3iny for the basics)
 - Added possibility to translate via transifex.
 - Added crc32b algorithm.
 
