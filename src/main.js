@@ -1,7 +1,9 @@
 /**
- * @copyright Copyright (C) 2020 Richard Steinmetz <richard@steinmetz.cloud>
+ * @copyright Copyright (c) 2021 Patrick Herzberg <patrick@westberliner.net>
  *
- * @author Richard Steinmetz <richard@steinmetz.cloud>
+ * @author Patrick Herzberg <patrick@westberliner.net>
+ *
+ * @license GNU AGPL version 3 or any later version
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -14,40 +16,14 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 
-import {translate as t} from '@nextcloud/l10n'
-import ChecksumTab from './ChecksumTab'
-
-let tabInstance = null
-const checksumTab = new OCA.Files.Sidebar.Tab({
-  id: 'checksumTabView',
-  name: t('checksum', 'Checksum'),
-  icon: 'icon-category-auth',
-
-  enabled(fileInfo) {
-    return fileInfo && !fileInfo.isDirectory()
-  },
-
-  mount(el, fileInfo, context) {
-    if (!tabInstance) {
-      tabInstance = new ChecksumTab(el)
-    }
-    tabInstance.render(fileInfo)
-  },
-
-  update(fileInfo) {
-    tabInstance.render(fileInfo)
-  },
-
-  destroy() {
-    tabInstance = null
-  },
-})
+import ChecksumTab from './views/ChecksumTab'
 
 window.addEventListener('DOMContentLoaded', function() {
-  if (OCA.Files && OCA.Files.Sidebar) {
-    OCA.Files.Sidebar.registerTab(checksumTab)
-  }
+	if (OCA.Files && OCA.Files.Sidebar) {
+		OCA.Files.Sidebar.registerTab(new OCA.Files.Sidebar.Tab('checksum', ChecksumTab))
+	}
 })
