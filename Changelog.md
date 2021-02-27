@@ -1,6 +1,11 @@
 Changelog
 =========
 
+**1.1.0**
+- Upgrade frontend to vue.
+- Added possibility to translate via transifex.
+- Added crc32b algorithm.
+
 **1.0.1**
 - Updated controller for backwards compatibility down to php7.2.
 
