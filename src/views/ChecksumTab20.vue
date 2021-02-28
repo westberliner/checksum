@@ -21,7 +21,9 @@
   -->
 
 <template>
-	<div>
+	<Tab :id="id"
+		:icon="icon"
+		:name="name">
 		<!-- checksum content -->
 		<Multiselect
 			v-model="algorithm"
@@ -34,13 +36,14 @@
 		<p :class="{ 'icon-loading': loading }" class="checksum-hash-result">
 			<span v-if="!loading && algorithm.id !== ''"><strong>{{ algorithm.label }}:</strong>{{ hash }}</span>
 		</p>
-	</div>
+	</Tab>
 </template>
 
 <script>
 import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 import Multiselect from '@nextcloud/vue/dist/Components/Multiselect'
+import Tab from '@nextcloud/vue/dist/Components/AppSidebarTab'
 
 const algorithms = [
 	{ id: '', label: t('checksum', 'Choose Algorithm') },
@@ -54,16 +57,28 @@ const algorithms = [
 ]
 
 export default {
-	name: 'ChecksumTab21',
+	name: 'ChecksumTab20',
 
 	components: {
+		Tab,
 		Multiselect,
 	},
 
 	mixins: [],
 
+	props: {
+		fileInfo: {
+			type: Object,
+			default: () => {},
+			required: true,
+		},
+	},
+
 	data() {
 		return {
+			// Enabled won't work as intended. This is a workaround for now.
+			icon: (this.fileInfo.type === 'file') ? 'icon-category-auth' : '',
+			name: t('checksum', 'Checksum'),
 			loading: false,
 			algorithm: algorithms[0],
 			algorithms,
@@ -72,6 +87,25 @@ export default {
 	},
 
 	computed: {
+		/**
+		 * Needed to differenciate the tabs
+		 * pulled from the AppSidebarTab component.
+		 *
+		 * @returns {string}
+		 */
+		id() {
+			return 'checksum'
+		},
+
+		/**
+		 * Allow checksum only on files.
+		 *
+		 * @returns {boolean}
+		 */
+		enabled() {
+			return (this.fileInfo.type === 'file')
+		},
+
 		/**
 		 * Returns the current active tab.
 		 * Needed because AppSidebarTab also uses $parent.activeTab.
@@ -85,14 +119,6 @@ export default {
 	},
 
 	methods: {
-		/**
-     * Update current fileInfo and fetch new data.
-     * @param {Object} fileInfo the current file FileInfo.
-     */
-		update(fileInfo) {
-			this.fileInfo = fileInfo
-		},
-
 		/**
 		 * Handles selection change event by triggering hash ajax call.
 		 *

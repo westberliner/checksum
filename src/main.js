@@ -21,18 +21,18 @@
  */
 import Vue from 'vue'
 import { translate as t } from '@nextcloud/l10n'
+import ChecksumTab20 from './views/ChecksumTab20'
 import ChecksumTab from './views/ChecksumTab'
-import ChecksumTab21 from './views/ChecksumTab21'
 
 // Init Sharing tab component
-const View = Vue.extend(ChecksumTab21)
+const View = Vue.extend(ChecksumTab)
 let tabInstance = null
 
 window.addEventListener('DOMContentLoaded', function() {
 	if (OCA.Files && OCA.Files.Sidebar) {
 		let checksumTab
 		if (OC.config.version < 21) {
-			checksumTab = new OCA.Files.Sidebar.Tab('checksum', ChecksumTab)
+			checksumTab = new OCA.Files.Sidebar.Tab('checksum', ChecksumTab20)
 		} else {
 			checksumTab = new OCA.Files.Sidebar.Tab({
 				id: 'checksum',
