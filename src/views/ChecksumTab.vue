@@ -90,6 +90,7 @@ export default {
      * @param {Object} fileInfo the current file FileInfo.
      */
 		update(fileInfo) {
+			this.resetState()
 			this.fileInfo = fileInfo
 		},
 
@@ -113,7 +114,7 @@ export default {
 		 */
 		getChecksum(algorithmType) {
 			const url = generateUrl('/apps/checksum/check')
-			const params = { source: this.fileInfo.path + this.fileInfo.name, type: algorithmType }
+			const params = { source: `${this.fileInfo.path}/${this.fileInfo.name}`, type: algorithmType }
 			axios.get(url, { params }).then(response => {
 				this.loading = false
 				this.hash = response.data.msg
@@ -127,7 +128,8 @@ export default {
 		 */
 		resetState() {
 			this.loading = false
-			this.algorithm = ''
+			this.algorithm = algorithms[0]
+			this.hash = ''
 		},
 	},
 }

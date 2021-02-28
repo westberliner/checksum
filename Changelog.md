@@ -1,6 +1,10 @@
 Changelog
 =========
 
+**1.1.1**
+- NC 20|21: Fixes issue on checksum files in folders not working.
+- NC 21: Fixed issue on fileinfo change not resetting view.
+
 **1.1.0**
 - Upgrade frontend to vue. (thx to @st3iny for the basics)
 - Added possibility to translate via transifex.
