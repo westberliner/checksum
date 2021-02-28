@@ -19,11 +19,50 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
+import Vue from 'vue'
+import { translate as t } from '@nextcloud/l10n'
 import ChecksumTab from './views/ChecksumTab'
+import ChecksumTab21 from './views/ChecksumTab21'
+
+// Init Sharing tab component
+const View = Vue.extend(ChecksumTab21)
+let tabInstance = null
 
 window.addEventListener('DOMContentLoaded', function() {
 	if (OCA.Files && OCA.Files.Sidebar) {
-		OCA.Files.Sidebar.registerTab(new OCA.Files.Sidebar.Tab('checksum', ChecksumTab))
+		let checksumTab
+		if (OC.config.version < 21) {
+			checksumTab = new OCA.Files.Sidebar.Tab('checksum', ChecksumTab)
+		} else {
+			checksumTab = new OCA.Files.Sidebar.Tab({
+				id: 'checksum',
+				name: t('checksum', 'Checksum'),
+				icon: 'icon-category-auth',
+
+				mount(el, fileInfo, context) {
+					if (tabInstance) {
+						tabInstance.$destroy()
+					}
+					tabInstance = new View({
+						// Better integration with vue parent component
+						parent: context,
+					})
+					// Only mount after we have all the info we need
+					tabInstance.update(fileInfo)
+					tabInstance.$mount(el)
+				},
+				update(fileInfo) {
+					tabInstance.update(fileInfo)
+				},
+				destroy() {
+					tabInstance.$destroy()
+					tabInstance = null
+				},
+				enabled(fileInfo) {
+					return (fileInfo.type === 'file')
+				},
+			})
+		}
+		OCA.Files.Sidebar.registerTab(checksumTab)
 	}
 })
