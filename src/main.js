@@ -31,7 +31,7 @@ let tabInstance = null
 window.addEventListener('DOMContentLoaded', function() {
 	if (OCA.Files && OCA.Files.Sidebar) {
 		let checksumTab
-		if (OC.config.version < 21) {
+		if (OC.config.version < '21') {
 			checksumTab = new OCA.Files.Sidebar.Tab('checksum', ChecksumTab20)
 		} else {
 			checksumTab = new OCA.Files.Sidebar.Tab({
