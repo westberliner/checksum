@@ -76,9 +76,10 @@ export default {
 
 	data() {
 		return {
-			icon: 'icon-category-auth',
-			loading: false,
+			// Enabled won't work as intended. This is a workaround for now.
+			icon: (this.fileInfo.type === 'file') ? 'icon-category-auth' : '',
 			name: t('checksum', 'Checksum'),
+			loading: false,
 			algorithm: algorithms[0],
 			algorithms,
 			hash: '',
@@ -87,13 +88,22 @@ export default {
 
 	computed: {
 		/**
-		 * Needed to differenciate the tabs.
-		 * Pulled from the AppSidebarTab component.
+		 * Needed to differenciate the tabs
+		 * pulled from the AppSidebarTab component.
 		 *
 		 * @returns {string}
 		 */
 		id() {
 			return 'checksum'
+		},
+
+		/**
+		 * Allow checksum only on files.
+		 *
+		 * @returns {boolean}
+		 */
+		enabled() {
+			return (this.fileInfo.type === 'file')
 		},
 
 		/**
@@ -105,6 +115,7 @@ export default {
 		activeTab() {
 			return this.$parent.activeTab
 		},
+
 	},
 
 	methods: {
