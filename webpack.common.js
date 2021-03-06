@@ -4,7 +4,7 @@ const webpackConfig = require('@nextcloud/webpack-vue-config')
 
 module.exports = merge(webpackConfig, {
   entry: {
-    main: path.join(__dirname, 'src/main.js'),
+    main: path.join(__dirname, 'src/main.ts'),
   },
   output: {
     path: path.resolve(__dirname, 'js'),
@@ -13,9 +13,9 @@ module.exports = merge(webpackConfig, {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.ts$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: 'ts-loader',
       },
     ],
   },

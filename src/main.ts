@@ -19,14 +19,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
+/// <reference types="@nextcloud/typings" />
+
+declare var OC: Nextcloud.v20.OC
+declare var window: Nextcloud.v20.WindowWithGlobals
+declare var OCA: Checksum.OCA
+
 import Vue from 'vue'
 import { translate as t } from '@nextcloud/l10n'
+// @ts-ignore
 import ChecksumTab20 from './views/ChecksumTab20'
+// @ts-ignore
 import ChecksumTab from './views/ChecksumTab'
 
 // Init Sharing tab component
 const View = Vue.extend(ChecksumTab)
-let tabInstance = null
+let tabInstance: Checksum.VueElement | null = null;
 
 window.addEventListener('DOMContentLoaded', function() {
 	if (OCA.Files && OCA.Files.Sidebar) {
@@ -39,7 +48,9 @@ window.addEventListener('DOMContentLoaded', function() {
 				name: t('checksum', 'Checksum'),
 				icon: 'icon-category-auth',
 
-				mount(el, fileInfo, context) {
+				mount(el: HTMLElement, fileInfo: Checksum.FileInfo, context: any) {
+					console.log('context')
+					console.log(context)
 					if (tabInstance) {
 						tabInstance.$destroy()
 					}
@@ -51,14 +62,14 @@ window.addEventListener('DOMContentLoaded', function() {
 					tabInstance.update(fileInfo)
 					tabInstance.$mount(el)
 				},
-				update(fileInfo) {
-					tabInstance.update(fileInfo)
+				update(fileInfo: Checksum.FileInfo) {
+					tabInstance?.update(fileInfo)
 				},
 				destroy() {
-					tabInstance.$destroy()
+					tabInstance?.$destroy()
 					tabInstance = null
 				},
-				enabled(fileInfo) {
+				enabled(fileInfo: Checksum.FileInfo): boolean {
 					return (fileInfo.type === 'file')
 				},
 			})
