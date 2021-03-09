@@ -19,7 +19,6 @@
   - along with this program. If not, see <http://www.gnu.org/licenses/>.
   -
   -->
-
 <template>
 	<div>
 		<!-- checksum content -->
@@ -41,17 +40,7 @@
 import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 import Multiselect from '@nextcloud/vue/dist/Components/Multiselect'
-
-const algorithms = [
-	{ id: '', label: t('checksum', 'Choose Algorithm') },
-	{ id: 'md5', label: 'MD5' },
-	{ id: 'sha1', label: 'SHA1' },
-	{ id: 'sha256', label: 'SHA256' },
-	{ id: 'sha384', label: 'SHA384' },
-	{ id: 'sha512', label: 'SHA512' },
-	{ id: 'crc32', label: 'CRC32' },
-	{ id: 'crc32b', label: 'CRC32b' },
-]
+import algorithms from '../Model/Algorithms'
 
 export default {
 	name: 'ChecksumTab',
