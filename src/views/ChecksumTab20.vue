@@ -19,7 +19,6 @@
   - along with this program. If not, see <http://www.gnu.org/licenses/>.
   -
   -->
-
 <template>
 	<Tab :id="id"
 		:icon="icon"
@@ -44,17 +43,7 @@ import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 import Multiselect from '@nextcloud/vue/dist/Components/Multiselect'
 import Tab from '@nextcloud/vue/dist/Components/AppSidebarTab'
-
-const algorithms = [
-	{ id: '', label: t('checksum', 'Choose Algorithm') },
-	{ id: 'md5', label: 'MD5' },
-	{ id: 'sha1', label: 'SHA1' },
-	{ id: 'sha256', label: 'SHA256' },
-	{ id: 'sha384', label: 'SHA384' },
-	{ id: 'sha512', label: 'SHA1' },
-	{ id: 'crc32', label: 'CRC32' },
-	{ id: 'crc32b', label: 'CRC32b' },
-]
+import Algorithms from '../model/Algorithms.ts'
 
 export default {
 	name: 'ChecksumTab20',
@@ -80,8 +69,8 @@ export default {
 			icon: (this.fileInfo.type === 'file') ? 'icon-category-auth' : '',
 			name: t('checksum', 'Checksum'),
 			loading: false,
-			algorithm: algorithms[0],
-			algorithms,
+			algorithm: Algorithms[0],
+			algorithms: Algorithms,
 			hash: '',
 		}
 	},
@@ -153,7 +142,7 @@ export default {
 		 */
 		resetState() {
 			this.loading = false
-			this.algorithm = algorithms[0]
+			this.algorithm = this.Algorithms[0]
 			this.hash = ''
 		},
 	},

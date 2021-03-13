@@ -21,5 +21,9 @@ declare global {
     interface IntrinsicElements {
       [elem: string]: any
     }
+    interface HashType {
+      id: string;
+      label: string;
+    }
   }
 }

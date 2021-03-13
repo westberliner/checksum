@@ -10,6 +10,9 @@ module.exports = merge(webpackConfig, {
     path: path.resolve(__dirname, 'js'),
     filename: 'checksum.[name].js',
   },
+  resolve: {
+    extensions: ['.ts', '.vue', '.js']
+  },
   module: {
     rules: [
       {

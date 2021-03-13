@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace OCA\Checksum\Controller;
 
+use OC\User\NoUserException;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\Files\Mount\IMountManager;
+use OCP\Files\FileInfo;
+use OCP\Files\IRootFolder;
+use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IUserSession;
@@ -20,9 +24,9 @@ class ChecksumController extends Controller {
     private $language;
 
     /**
-     * @var IMountManager
+     * @var IRootFolder
      */
-    private $mountManager;
+    private $rootFolder;
 
     /**
      * @var IUserSession
@@ -35,20 +39,20 @@ class ChecksumController extends Controller {
      * @param string $appName
      * @param IRequest $request
      * @param IFactory $languageFactory
-     * @param IMountManager $mountManager
+     * @param IRootFolder $rootFolder
      * @param IUserSession $userSession
      */
     public function __construct(
         string $appName,
         IRequest $request,
         IFactory $languageFactory,
-        IMountManager $mountManager,
+        IRootFolder $rootFolder,
         IUserSession $userSession
     ) {
         parent::__construct($appName, $request);
 
         $this->language = $languageFactory->get('checksum');
-        $this->mountManager = $mountManager;
+        $this->rootFolder = $rootFolder;
         $this->userSession = $userSession;
     }
 
@@ -97,18 +101,18 @@ class ChecksumController extends Controller {
             return null;
         }
 
-        $absPath = $user->getUID() . '/files/' . $source;
-        $mount = $this->mountManager->find($absPath);
-        if (!$mount) {
+        try {
+            $home = $this->rootFolder->getUserFolder($user->getUID());
+            $node = $home->get($source);
+        } catch (NotPermittedException | NoUserException | NotFoundException $e) {
             return null;
         }
 
-        $internalPath = $mount->getInternalPath($absPath);
-        $file = $mount->getStorage()->fopen($internalPath, 'rb');
-        if (!$file) {
+        if ($node->getType() !== FileInfo::TYPE_FILE) {
             return null;
         }
 
+        $file = $node->fopen('rb');
         $hash = hash_init($type);
         hash_update_stream($hash, $file);
         fclose($file);

@@ -1,6 +1,11 @@
 Changelog
 =========
 
+**1.1.2**
+- Fixes wrong label for sha512 checksum. (thx to @st3iny)
+- Refactor checksum controller to appropriate nc folder class. (thx to @st3iny)
+- Centralize algorithms in javascript.
+
 **1.1.1**
 - NC 20|21: Fixes issue on checksum files in folders not working.
 - NC 21: Fixed issue on fileinfo change not resetting view.

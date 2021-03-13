@@ -49,8 +49,6 @@ window.addEventListener('DOMContentLoaded', function() {
 				icon: 'icon-category-auth',
 
 				mount(el: HTMLElement, fileInfo: Checksum.FileInfo, context: any) {
-					console.log('context')
-					console.log(context)
 					if (tabInstance) {
 						tabInstance.$destroy()
 					}

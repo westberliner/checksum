@@ -1,9 +1,10 @@
 {
   "name": "checksum",
-  "version": "1.1.1",
-  "private": true,
   "description": "Checksum app for Nextcloud",
+  "version": "1.1.2",
   "author": "westberliner",
+  "license": "agpl",
+  "private": true,
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.prod.js",
     "deploy": "rm -rf js/* && yarn install && yarn build && cd .. && tar -cvzf checksum.tar.gz -X checksum/.exclude checksum && cd checksum",
@@ -55,6 +56,5 @@
   },
   "browserslist": [
     "extends @nextcloud/browserslist-config"
-  ],
-  "license": "agpl"
+  ]
 }
