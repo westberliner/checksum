@@ -20,6 +20,7 @@
  *
  */
 
+
 /// <reference types="@nextcloud/typings" />
 
 declare var OC: Nextcloud.v20.OC
@@ -28,50 +29,40 @@ declare var OCA: Checksum.OCA
 
 import Vue from 'vue'
 import { translate as t } from '@nextcloud/l10n'
-// @ts-ignore
-import ChecksumTab20 from './views/ChecksumTab20'
-// @ts-ignore
-import ChecksumTab from './views/ChecksumTab'
+import ChecksumTab from './views/ChecksumTab.vue'
 
-// Init Sharing tab component
-const View = Vue.extend(ChecksumTab)
-let tabInstance: Checksum.VueElement | null = null;
+let tabInstance: Checksum.VueElement | null = null
 
 window.addEventListener('DOMContentLoaded', function() {
 	if (OCA.Files && OCA.Files.Sidebar) {
-		let checksumTab
-		if (OC.config.version < '21') {
-			checksumTab = new OCA.Files.Sidebar.Tab('checksum', ChecksumTab20)
-		} else {
-			checksumTab = new OCA.Files.Sidebar.Tab({
-				id: 'checksum',
-				name: t('checksum', 'Checksum'),
-				icon: 'icon-category-auth',
+		const checksumTab = new OCA.Files.Sidebar.Tab({
+			id: 'checksum',
+			name: t('checksum', 'Checksum'),
+			icon: 'icon-category-auth',
 
-				mount(el: HTMLElement, fileInfo: Checksum.FileInfo, context: any) {
-					if (tabInstance) {
-						tabInstance.$destroy()
-					}
-					tabInstance = new View({
-						// Better integration with vue parent component
-						parent: context,
-					})
-					// Only mount after we have all the info we need
-					tabInstance.update(fileInfo)
-					tabInstance.$mount(el)
-				},
-				update(fileInfo: Checksum.FileInfo) {
-					tabInstance?.update(fileInfo)
-				},
-				destroy() {
-					tabInstance?.$destroy()
-					tabInstance = null
-				},
-				enabled(fileInfo: Checksum.FileInfo): boolean {
-					return (fileInfo.type === 'file')
-				},
-			})
-		}
+			mount(el: HTMLElement, fileInfo: Checksum.FileInfo, context: any) {
+				if (tabInstance) {
+					tabInstance.$destroy()
+				}
+				tabInstance = new ChecksumTab({
+					// Better integration with vue parent component
+					parent: context,
+				})
+				// Only mount after we have all the info we need
+				tabInstance.update(fileInfo)
+				tabInstance.$mount(el)
+			},
+			update(fileInfo: Checksum.FileInfo) {
+				tabInstance?.update(fileInfo)
+			},
+			destroy() {
+				tabInstance?.$destroy()
+				tabInstance = null
+			},
+			enabled(fileInfo: Checksum.FileInfo): boolean {
+				return (fileInfo.type === 'file')
+			},
+		})
 		OCA.Files.Sidebar.registerTab(checksumTab)
 	}
 })

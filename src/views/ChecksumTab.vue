@@ -37,12 +37,13 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 import Multiselect from '@nextcloud/vue/dist/Components/Multiselect'
 import Algorithms from '../model/Algorithms.ts'
 
-export default {
+export default Vue.extend({
 	name: 'ChecksumTab',
 
 	components: {
@@ -121,7 +122,7 @@ export default {
 			this.hash = ''
 		},
 	},
-}
+})
 </script>
 
 <style lang="scss" scoped>
