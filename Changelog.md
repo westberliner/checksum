@@ -1,6 +1,10 @@
 Changelog
 =========
 
+**1.1.3**
+- Updated info.xml > bump nextcloud support to version 23.
+- Updated node dependencies.
+
 **1.1.2**
 - Fixes wrong label for sha512 checksum. (thx to @st3iny)
 - Refactor checksum controller to appropriate nc folder class. (thx to @st3iny)

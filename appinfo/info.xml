@@ -12,7 +12,7 @@
         Select a algorithm and it will try to generate a hash.
         If you want an other algorithm, just click on the reload button.
     </description>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
     <licence>agpl</licence>
     <author>westberliner</author>
     <types>
@@ -29,6 +29,6 @@
     <screenshot>https://raw.githubusercontent.com/westberliner/checksum/master/screenshots/checksum.gif</screenshot>
     <dependencies>
         <php min-version="7.2" />
-        <nextcloud min-version="20" max-version="22" />
+        <nextcloud min-version="20" max-version="23" />
     </dependencies>
 </info>
