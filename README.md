@@ -18,6 +18,13 @@ Just open the details view of the file (Sidebar). There should be a new tab call
 
 Possible algorithms are md5, sha1, sha256, sha384, sha512 and crc32.
 
+
+Translation
+-----------
+
+If your language is missing, feel free to translate your language under [transifex](https://www.transifex.com/nextcloud/search/?q=resource%3Achecksum).
+
+
 Compatibility
 -------------
 
