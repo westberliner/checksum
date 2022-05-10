@@ -1,6 +1,10 @@
 Changelog
 =========
 
+**1.1.4**
+- Updated info.xml > bump nextcloud support to version 24.
+- Updated node dependencies.
+
 **1.1.3**
 - Updated info.xml > bump nextcloud support to version 23.
 - Updated node dependencies.
