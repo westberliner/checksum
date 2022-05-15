@@ -28,7 +28,7 @@
     <bugs>https://github.com/westberliner/checksum/issues</bugs>
     <screenshot>https://raw.githubusercontent.com/westberliner/checksum/master/screenshots/checksum.gif</screenshot>
     <dependencies>
-        <php min-version="7.2" />
+        <php min-version="7.4" />
         <nextcloud min-version="20" max-version="24" />
     </dependencies>
 </info>

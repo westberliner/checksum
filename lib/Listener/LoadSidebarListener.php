@@ -30,12 +30,11 @@ use OCP\EventDispatcher\IEventListener;
 use OCP\Util;
 
 class LoadSidebarListener implements IEventListener {
+	public function handle(Event $event): void {
+		if (!($event instanceof LoadSidebar)) {
+			return;
+		}
 
-    public function handle(Event $event): void {
-        if (!($event instanceof LoadSidebar)) {
-            return;
-        }
-
-        Util::addScript(Application::APP_ID, 'checksum.main');
-    }
+		Util::addScript(Application::APP_ID, 'checksum.main');
+	}
 }

@@ -31,20 +31,23 @@ use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 
 class Application extends App implements IBootstrap {
-    public const APP_ID = 'checksum';
+	public const APP_ID = 'checksum';
 
-    public function __construct(array $urlParams = []) {
-        parent::__construct(self::APP_ID, $urlParams);
-    }
+	/**
+	 * @param array<string> $urlParams
+	 */
+	public function __construct(array $urlParams = []) {
+		parent::__construct(self::APP_ID, $urlParams);
+	}
 
-    public function register(IRegistrationContext $context): void {
-        // Load scripts for sidebar.
-        $context->registerEventListener(
-            LoadSidebar::class,
-            LoadSidebarListener::class
-        );
-    }
+	public function register(IRegistrationContext $context): void {
+		// Load scripts for sidebar.
+		$context->registerEventListener(
+			LoadSidebar::class,
+			LoadSidebarListener::class
+		);
+	}
 
-    public function boot(IBootContext $context): void {
-    }
+	public function boot(IBootContext $context): void {
+	}
 }

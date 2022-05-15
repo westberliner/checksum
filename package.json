@@ -9,7 +9,7 @@
     "build": "NODE_ENV=production webpack --config webpack.prod.js",
     "dev": "NODE_ENV=development webpack --config webpack.dev.js",
     "watch": "NODE_ENV=development webpack --config webpack.dev.js --watch",
-    "deploy": "rm -rf js/* && yarn install && yarn build && cd .. && tar -cvzf checksum.tar.gz -X checksum/.exclude checksum && cd checksum"
+    "deploy": "rm -rf js/* && npm install && npm run build && cd .. && tar -cvzf checksum.tar.gz -X checksum/.exclude checksum && cd checksum"
   },
   "dependencies": {
     "@nextcloud/axios": "^1.10.0",

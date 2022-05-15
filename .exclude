@@ -6,3 +6,7 @@
 *.lock
 ./node_modules
 ./src
+./vendor
+./tests
+./bootstrap.php
+*.neon
