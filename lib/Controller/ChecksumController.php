@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OCA\Checksum\Controller;
 
 use OC\User\NoUserException;
+use OCA\Checksum\AppInfo\Application;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\Files\FileInfo;
@@ -51,7 +52,7 @@ class ChecksumController extends Controller {
 	) {
 		parent::__construct($appName, $request);
 
-		$this->language = $languageFactory->get('checksum');
+		$this->language = $languageFactory->get(Application::APP_ID);
 		$this->rootFolder = $rootFolder;
 		$this->userSession = $userSession;
 	}
