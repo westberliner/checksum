@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Nextcloud 3.14159\n"
 "Report-Msgid-Bugs-To: translations\\@example.com\n"
-"POT-Creation-Date: 2022-10-22 03:16+0000\n"
+"POT-Creation-Date: 2022-10-23 03:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /app/lib/Controller/ChecksumController.php:73
+#: /app/lib/Controller/ChecksumController.php:74
 #, php-format
 msgid "The algorithm type \"%s\" is not a valid or supported algorithm type."
 msgstr ""
 
-#: /app/lib/Controller/ChecksumController.php:93
+#: /app/lib/Controller/ChecksumController.php:94
 msgid "File not found."
 msgstr ""
 
