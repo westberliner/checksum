@@ -36,7 +36,7 @@ window.addEventListener('DOMContentLoaded', function() {
 		} else {
 			checksumTab = new OCA.Files.Sidebar.Tab({
 				id: 'checksum',
-				name: t('checksum', 'Checksum'),
+				name: t('Checksum', 'Checksum'),
 				icon: 'icon-category-auth',
 
 				mount(el, fileInfo, context) {
