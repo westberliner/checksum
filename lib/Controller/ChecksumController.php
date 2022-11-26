@@ -136,6 +136,8 @@ class ChecksumController extends Controller {
 			'sha256',
 			'sha384',
 			'sha512',
+			'sha3-256',
+			'sha3-512',
 			'crc32',
 			'crc32b'
 		];

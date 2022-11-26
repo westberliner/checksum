@@ -26,6 +26,10 @@ msgstr ""
 msgid "File not found."
 msgstr ""
 
+#: /app/src/views/ChecksumTab.vue:62
+msgid "Hash copied to clipboard."
+msgstr ""
+
 #. TRANSLATORS views/ChecksumTab20.vue:70
 #: /app/specialAppInfoFakeDummyForL10nScript.php:2
 #: /app/specialVueFakeDummyForL10nScript.js:2 /app/src/main.js:39
@@ -39,7 +43,7 @@ msgstr ""
 #: /app/specialAppInfoFakeDummyForL10nScript.php:4
 msgid ""
 "Allows users to create a hash checksum of a file.\n"
-"        Possible algorithms are md5, sha1, sha256, sha384, sha512 and "
+"        Possible algorithms are md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and "
 "crc32.\n"
 "\n"
 "        Just open the details view of the file (Sidebar). There should be a "

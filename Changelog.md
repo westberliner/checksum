@@ -1,6 +1,15 @@
 Changelog
 =========
 
+**1.2.0**
+- Fix failed release - present development files.
+- Adding sha3. (thx for mentioning @tuxmaster5000)
+- Adding copy to clipboard.
+- Removed Nextcloud support for version 20 and older.
+
+**1.1.5**
+- Updated info.xml > bump nextcloud support to version 25.
+
 **1.1.4**
 - Updated info.xml > bump nextcloud support to version 24.
 - Updated node dependencies.

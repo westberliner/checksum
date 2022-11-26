@@ -22,6 +22,7 @@
 <template>
 	<div>
 		<!-- checksum content -->
+		<br>
 		<Multiselect
 			v-model="algorithm"
 			:options="algorithms"
@@ -30,9 +31,14 @@
 			@change="onAlgorithmChangeHandler" />
 		<br>
 		<br>
-		<p :class="{ 'icon-loading': loading }" class="checksum-hash-result">
-			<span v-if="!loading && algorithm.id !== ''"><strong>{{ algorithm.label }}:</strong>{{ hash }}</span>
+		<p :class="{ 'icon-loading': loading }" class="checksum-hash-result" @click="clipboard">
+			<span v-if="!loading && algorithm.id !== ''">
+				<strong>{{ algorithm.label }}:<br></strong>
+				<span>{{ hash }}</span>
+			</span>
 		</p>
+		<input disabled="disabled" style="opacity: 0;" id="checksum-hash" :value="hash" />
+		<p v-if="copied">{{ copyMessage }}</p>
 	</div>
 </template>
 
@@ -54,9 +60,11 @@ export default {
 	data() {
 		return {
 			loading: false,
+			copied: false,
 			algorithm: algorithms[0],
 			algorithms,
 			hash: '',
+			copyMessage: t('checksum', 'Hash copied to clipboard.')
 		}
 	},
 
@@ -94,12 +102,13 @@ export default {
 			this.hash = ''
 			if (algorithm.id.length) {
 				this.loading = true
+				this.copied = false
 				this.getChecksum(algorithm.id)
 			}
 		},
 
 		/**
-		 * @param {string} algorithmType - The hasg algorithm type.
+		 * @param {string} algorithmType - The hash algorithm type.
 		 */
 		getChecksum(algorithmType) {
 			const url = generateUrl('/apps/checksum/check')
@@ -111,12 +120,23 @@ export default {
 				console.error(err)
 			})
 		},
+		
+		/**
+		 * @param {string} hash - The hash result.
+		 */
+		clipboard() {
+			const copyText = document.querySelector('#checksum-hash')
+  			copyText.select()
+  			document.execCommand('copy')
+			this.copied = true
+		},
 
 		/**
 		 * Reset the current view to its default state
 		 */
 		resetState() {
 			this.loading = false
+			this.copied = false
 			this.algorithm = algorithms[0]
 			this.hash = ''
 		},
@@ -126,7 +146,14 @@ export default {
 
 <style lang="scss" scoped>
 	.checksum-hash-result {
-		text-align: center;
+		text-align: left;
 		word-wrap: break-word;
+		cursor: pointer;
+		span {
+			cursor: pointer;
+		}
+	}
+	#checksum-hash {
+		cursor: default;
 	}
 </style>
