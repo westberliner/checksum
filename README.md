@@ -22,7 +22,9 @@ Possible algorithms are md5, sha1, sha256, sha384, sha512 and crc32.
 Translation
 -----------
 
-If your language is missing, feel free to translate your language under [transifex](https://www.transifex.com/nextcloud/search/?q=resource%3Achecksum).
+If your language is missing, feel free to translate your language under [transifex](https://www.transifex.com/nextcloud/nextcloud/checksum/).
+
+If you are not already a member of the transifex nextcloud project create an account and join the project.
 
 
 Compatibility
