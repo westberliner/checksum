@@ -27,6 +27,12 @@
     <website>https://github.com/westberliner/checksum/</website>
     <bugs>https://github.com/westberliner/checksum/issues</bugs>
     <screenshot>https://raw.githubusercontent.com/westberliner/checksum/master/screenshots/checksum.gif</screenshot>
+    <settings>
+        <admin>OCA\Checksum\Settings\AdminSettings</admin>
+        <admin-section>OCA\Checksum\Settings\AdminSection</admin-section>
+        <personal>OCA\Checksum\Settings\PersonalSettings</personal>
+        <personal-section>OCA\Checksum\Settings\PersonalSection</personal-section>
+    </settings>
     <dependencies>
         <php min-version="7.4" />
         <nextcloud min-version="20" max-version="25" />
