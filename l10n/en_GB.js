@@ -5,7 +5,6 @@ OC.L10N.register(
     "File not found." : "File not found.",
     "Checksum" : "Checksum",
     "Creating a hash checksum of a file." : "Creating a hash checksum of a file.",
-    "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button." : "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button.",
     "Choose Algorithm" : "Choose Algorithm"
 },
 "nplurals=2; plural=(n != 1);");
