@@ -1,6 +1,9 @@
 Changelog
 =========
 
+**1.2.1**
+- Updated info.xml > bump nextcloud support to version 26.
+
 **1.2.0**
 - Fix failed release - present development files.
 - Adding sha3. (thx for mentioning @tuxmaster5000)
