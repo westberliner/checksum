@@ -1,4 +1,10 @@
 { "translations": {
-    "File not found." : "الملف غير موجود"
+    "The algorithm type \"%s\" is not a valid or supported algorithm type." : "نوع الخوارزمية \"%s\" غير صحيح أو غير مدعوم.",
+    "File not found." : "الملف غير موجود",
+    "Checksum" : "المجموع الاختباري Checksum",
+    "Creating a hash checksum of a file." : "توليد مجموع اختباري لمستخلص hash checksum ملف.",
+    "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button." : "تمكين المستخدمين من توليد \"مجموع اختبار لمستخلص ملف\" file hash checksum باستخدام إحدى خوارزميات التشفير التالية: md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and crc32.\n\nبكل بساطة، إفتح تفاصيل الملف (في الشريط الجانبي) و ستظهر لك تبويبة جديدة باسم \"Checksum\".  إختر خوارزميةً و سيظهر لك المستخلص hash الذي تمّ توليده. إذا رغبت في تغيير الخوارزمية، إضغط زر إعادة التحميل \"reload\".",
+    "Hash copied to clipboard." : "تمّ نسخ المستخلص hash إلى الحافظة.",
+    "Choose Algorithm" : "إختر خوارزميةً"
 },"pluralForm" :"nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;"
 }
