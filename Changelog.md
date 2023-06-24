@@ -1,6 +1,9 @@
 Changelog
 =========
 
+**1.2.2**
+- Updated info.xml > bump nextcloud support to version 27.
+
 **1.2.1**
 - Updated info.xml > bump nextcloud support to version 26.
 
