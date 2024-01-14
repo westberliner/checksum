@@ -23,16 +23,16 @@
 	<div>
 		<!-- checksum content -->
 		<br>
-		<Multiselect
+		<NcSelect
 			v-model="algorithm"
 			:options="algorithms"
 			track-by="id"
 			label="label"
-			@change="onAlgorithmChangeHandler" />
+			@input="onAlgorithmChangeHandler" />
 		<br>
 		<br>
 		<p :class="{ 'icon-loading': loading }" class="checksum-hash-result" @click="clipboard">
-			<span v-if="!loading && algorithm.id !== ''">
+			<span v-if="!loading && algorithm && algorithm.id !== ''">
 				<strong>{{ algorithm.label }}:<br></strong>
 				<span>{{ hash }}</span>
 			</span>
@@ -45,14 +45,14 @@
 <script>
 import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
-import Multiselect from '@nextcloud/vue/dist/Components/Multiselect'
+import { NcSelect } from '@nextcloud/vue'
 import algorithms from '../Model/Algorithms'
 
 export default {
 	name: 'ChecksumTab',
 
 	components: {
-		Multiselect,
+		NcSelect,
 	},
 
 	mixins: [],
@@ -98,9 +98,10 @@ export default {
 		 * @param {string} algorithm.id - The selected algorithm id.
 		 * @param {string} algorithm.label - The selected algorithm label.
 		 */
-		onAlgorithmChangeHandler(algorithm) {
+		onAlgorithmChangeHandler(algorithm) {		
 			this.hash = ''
-			if (algorithm.id.length) {
+			this.copied = false
+			if (algorithm && algorithm.id.length) {
 				this.loading = true
 				this.copied = false
 				this.getChecksum(algorithm.id)
