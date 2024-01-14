@@ -12,10 +12,10 @@
     "deploy": "rm -rf js/* && npm install && npm run build && cd .. && tar -cvzf checksum.tar.gz -X checksum/.exclude checksum && cd checksum"
   },
   "dependencies": {
-    "@nextcloud/axios": "^1.10.0",
+    "@nextcloud/axios": "^2.4.0",
     "@nextcloud/l10n": "^1.6.0",
     "@nextcloud/router": "^2.0.0",
-    "@nextcloud/vue": "^5.3.0",
+    "@nextcloud/vue": "^8.4.0",
     "vue": "^2.6.12"
   },
   "devDependencies": {
