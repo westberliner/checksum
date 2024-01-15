@@ -5,6 +5,7 @@ OC.L10N.register(
     "File not found." : "File non trovato.",
     "Checksum" : "Checksum",
     "Creating a hash checksum of a file." : "Creazione di un checksum hash di un file.",
+    "Hash copied to clipboard." : "Hash copiato negli appunti.",
     "Choose Algorithm" : "Scegli algoritmo"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
