@@ -2,7 +2,7 @@ OC.L10N.register(
     "checksum",
     {
     "The algorithm type \"%s\" is not a valid or supported algorithm type." : "Algoritmtypen  \"%s\" är inte giltig eller så stöds den inte.",
-    "File not found." : "Filen hittades ej.",
+    "File not found." : "Filen hittades inte.",
     "Checksum" : "Checksumma",
     "Creating a hash checksum of a file." : "Skapar en hash-checksumma för filen.",
     "Hash copied to clipboard." : "Hash kopierad till urklipp.",
