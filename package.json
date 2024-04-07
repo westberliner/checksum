@@ -1,7 +1,7 @@
 {
   "name": "checksum",
   "description": "Checksum app for Nextcloud",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "author": "westberliner",
   "license": "agpl",
   "private": true,
