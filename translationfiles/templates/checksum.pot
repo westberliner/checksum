@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Nextcloud 3.14159\n"
 "Report-Msgid-Bugs-To: translations\\@example.com\n"
-"POT-Creation-Date: 2025-02-26 02:50+0000\n"
+"POT-Creation-Date: 2025-02-27 02:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,8 +46,7 @@ msgid ""
 "        If you want an other algorithm, just click on the reload button."
 msgstr ""
 
-#. TRANSLATORS views/ChecksumTab.vue:67
-#: /app/specialVueFakeDummyForL10nScript.js:2
+#: /app/specialVueFakeDummyForL10nScript.js:23
 msgid "Hash copied to clipboard."
 msgstr ""
 
