@@ -127,10 +127,15 @@ export default {
 		/**
 		 * @param {string} hash - The hash result.
 		 */
-		clipboard() {
-			const copyText = document.querySelector('#checksum-hash')
-  			copyText.select()
-  			document.execCommand('copy')
+		async clipboard() {
+			if (navigator?.clipboard?.writeText) {
+				await navigator.clipboard.writeText(this.hash)
+			} else {
+				const copyText = document.querySelector('#checksum-hash')
+				copyText.select()
+				document.execCommand('copy')
+			}
+
 			this.copied = true
 		},
 
