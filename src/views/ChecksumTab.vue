@@ -28,10 +28,11 @@
 			:options="algorithms"
 			track-by="id"
 			label="label"
-			@input="onAlgorithmChangeHandler" />
+			@update:modelValue="onAlgorithmChangeHandler" />
 		<br>
 		<br>
-		<p :class="{ 'icon-loading': loading }" class="checksum-hash-result" @click="clipboard">
+		<NcLoadingIcon v-if="loading" :size="40" />
+		<p v-else class="checksum-hash-result" @click="clipboard">
 			<span v-if="!loading && algorithm && algorithm.id !== ''">
 				<strong>{{ algorithm.label }}:<br></strong>
 				<span>{{ hash }}</span>
@@ -45,13 +46,14 @@
 <script>
 import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
-import { NcSelect } from '@nextcloud/vue'
+import { NcLoadingIcon, NcSelect } from '@nextcloud/vue'
 import algorithms from '../Model/Algorithms'
 
 export default {
 	name: 'ChecksumTab',
 
 	components: {
+		NcLoadingIcon,
 		NcSelect,
 	},
 
@@ -98,7 +100,7 @@ export default {
 		 * @param {string} algorithm.id - The selected algorithm id.
 		 * @param {string} algorithm.label - The selected algorithm label.
 		 */
-		onAlgorithmChangeHandler(algorithm) {		
+		onAlgorithmChangeHandler(algorithm) {
 			this.hash = ''
 			this.copied = false
 			if (algorithm && algorithm.id.length) {
@@ -121,14 +123,19 @@ export default {
 				console.error(err)
 			})
 		},
-		
+
 		/**
 		 * @param {string} hash - The hash result.
 		 */
-		clipboard() {
-			const copyText = document.querySelector('#checksum-hash')
-  			copyText.select()
-  			document.execCommand('copy')
+		async clipboard() {
+			if (navigator?.clipboard?.writeText) {
+				await navigator.clipboard.writeText(this.hash)
+			} else {
+				const copyText = document.querySelector('#checksum-hash')
+				copyText.select()
+				document.execCommand('copy')
+			}
+
 			this.copied = true
 		},
 

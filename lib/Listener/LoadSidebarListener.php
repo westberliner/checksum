@@ -35,6 +35,6 @@ class LoadSidebarListener implements IEventListener {
 			return;
 		}
 
-		Util::addScript(Application::APP_ID, 'checksum.main');
+		Util::addScript(Application::APP_ID, 'checksum-main');
 	}
 }
