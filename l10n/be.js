@@ -1,6 +1,7 @@
 OC.L10N.register(
     "checksum",
     {
+    "File not found." : "Файл не знойдзены.",
     "Checksum" : "Кантрольная сума",
     "Choose Algorithm" : "Выберыце алгарытм"
 },
