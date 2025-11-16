@@ -19,39 +19,39 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import { createApp } from 'vue'
-import { translate as t } from '@nextcloud/l10n'
-import ChecksumTab from './views/ChecksumTab.vue'
+import { createApp } from "vue";
+import { translate as t } from "@nextcloud/l10n";
+import ChecksumTab from "./views/ChecksumTab.vue";
 
-let tabApp = null
-let tabVm = null
+let tabApp = null;
+let tabVm = null;
 
-window.addEventListener('DOMContentLoaded', function() {
-	if (OCA.Files && OCA.Files.Sidebar) {
-		const checksumTab = new OCA.Files.Sidebar.Tab({
-			id: 'checksum',
-			name: t('checksum', 'Checksum'),
-			icon: 'icon-category-auth',
+window.addEventListener("DOMContentLoaded", function () {
+  if (OCA.Files && OCA.Files.Sidebar) {
+    const checksumTab = new OCA.Files.Sidebar.Tab({
+      id: "checksum",
+      name: t("checksum", "Checksum"),
+      icon: "icon-category-auth",
 
-			mount(el, fileInfo, context) {
-				// Destroy old tab if present
-				tabApp?.unmount()
+      mount(el, fileInfo, context) {
+        // Destroy old tab if present
+        tabApp?.unmount();
 
-				tabApp = createApp(ChecksumTab)
-				tabVm = tabApp.mount(el)
-				tabVm.update(fileInfo)
-			},
-			update(fileInfo) {
-				tabVm.update(fileInfo)
-			},
-			destroy() {
-				tabApp.unmount()
-				tabApp = null
-			},
-			enabled(fileInfo) {
-				return (fileInfo.type === 'file')
-			},
-		})
-		OCA.Files.Sidebar.registerTab(checksumTab)
-	}
-})
+        tabApp = createApp(ChecksumTab);
+        tabVm = tabApp.mount(el);
+        tabVm.update(fileInfo);
+      },
+      update(fileInfo) {
+        tabVm.update(fileInfo);
+      },
+      destroy() {
+        tabApp.unmount();
+        tabApp = null;
+      },
+      enabled(fileInfo) {
+        return fileInfo.type === "file";
+      },
+    });
+    OCA.Files.Sidebar.registerTab(checksumTab);
+  }
+});

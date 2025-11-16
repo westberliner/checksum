@@ -7,6 +7,19 @@ OC.L10N.register(
     "Creating a hash checksum of a file." : "Creating a hash checksum of a file.",
     "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button." : "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button.",
     "Hash copied to clipboard." : "Hash copied to clipboard.",
-    "Choose Algorithm" : "Choose Algorithm"
+    "Choose Algorithm" : "Choose Algorithm",
+    "Byte Range (Optional)" : "Byte Range (Optional)",
+    "Start Byte" : "Start Byte",
+    "End Byte" : "End Byte",
+    "e.g., 0" : "e.g., 0",
+    "e.g., 1024" : "e.g., 1024",
+    "Start byte must be a valid number." : "Start byte must be a valid number.",
+    "End byte must be a valid number." : "End byte must be a valid number.",
+    "Start byte must be less than end byte." : "Start byte must be less than end byte.",
+    "Start byte must be 0 or greater." : "Start byte must be 0 or greater.",
+    "End byte must be 0 or greater." : "End byte must be 0 or greater.",
+    "Error calculating checksum." : "Error calculating checksum.",
+    "Advanced: Byte Range" : "Advanced: Byte Range",
+    "Hide Byte Range" : "Hide Byte Range"
 },
 "nplurals=2; plural=(n != 1);");

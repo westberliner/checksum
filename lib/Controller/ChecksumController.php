@@ -63,9 +63,11 @@ class ChecksumController extends Controller {
 	 * @NoAdminRequired
 	 * @param string $source file path relative to user home
 	 * @param string $type hash algorithm
+	 * @param int|null $byteStart optional start byte offset
+	 * @param int|null $byteEnd optional end byte offset
 	 * @return JSONResponse
 	 */
-	public function check(string $source, string $type): JSONResponse {
+	public function check(string $source, string $type, ?int $byteStart = null, ?int $byteEnd = null): JSONResponse {
 		if (!$this->checkAlgorithmType($type)) {
 			return new JSONResponse(
 				[
@@ -78,7 +80,35 @@ class ChecksumController extends Controller {
 			);
 		}
 
-		$hash = $this->getHash($source, $type);
+		// Validate byte range parameters
+		if ($byteStart !== null && $byteStart < 0) {
+			return new JSONResponse(
+				[
+					'response' => 'error',
+					'msg' => $this->language->t('Start byte must be 0 or greater.')
+				]
+			);
+		}
+
+		if ($byteEnd !== null && $byteEnd < 0) {
+			return new JSONResponse(
+				[
+					'response' => 'error',
+					'msg' => $this->language->t('End byte must be 0 or greater.')
+				]
+			);
+		}
+
+		if ($byteStart !== null && $byteEnd !== null && $byteStart >= $byteEnd) {
+			return new JSONResponse(
+				[
+					'response' => 'error',
+					'msg' => $this->language->t('Start byte must be less than end byte.')
+				]
+			);
+		}
+
+		$hash = $this->getHash($source, $type, $byteStart, $byteEnd);
 		if ($hash) {
 			return new JSONResponse(
 				[
@@ -96,7 +126,7 @@ class ChecksumController extends Controller {
 		);
 	}
 
-	private function getHash(string $source, string $type): ?string {
+	private function getHash(string $source, string $type, ?int $byteStart = null, ?int $byteEnd = null): ?string {
 		$user = $this->userSession->getUser();
 		if (!$user) {
 			return null;
@@ -115,8 +145,52 @@ class ChecksumController extends Controller {
 		}
 
 		$file = $node->fopen('rb');
+		if (!$file) {
+			return null;
+		}
+
 		$hash = hash_init($type);
-		hash_update_stream($hash, $file);
+
+		// If byte range is specified, read only that portion
+		if ($byteStart !== null || $byteEnd !== null) {
+			$fileSize = $node->getSize();
+			$start = $byteStart ?? 0;
+			$end = $byteEnd ?? $fileSize;
+
+			// Validate that the range is within file bounds
+			if ($start >= $fileSize) {
+				fclose($file);
+				return null;
+			}
+
+			// Adjust end if it exceeds file size
+			$end = min($end, $fileSize);
+
+			// Seek to start position
+			if ($start > 0) {
+				fseek($file, $start);
+			}
+
+			// Read in chunks up to the end position
+			$bytesToRead = $end - $start;
+			$chunkSize = 8192; // 8KB chunks
+
+			while ($bytesToRead > 0 && !feof($file)) {
+				$currentChunkSize = min($chunkSize, $bytesToRead);
+				$chunk = fread($file, $currentChunkSize);
+				
+				if ($chunk === false) {
+					break;
+				}
+				
+				hash_update($hash, $chunk);
+				$bytesToRead -= strlen($chunk);
+			}
+		} else {
+			// Read entire file
+			hash_update_stream($hash, $file);
+		}
+
 		fclose($file);
 
 		return hash_final($hash);
