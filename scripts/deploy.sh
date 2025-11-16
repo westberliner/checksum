@@ -134,7 +134,8 @@ print_success "Build completed successfully"
 print_section "Creating Release Package"
 cd ..
 echo "Creating checksum.tar.gz..."
-tar -czf checksum.tar.gz -X checksum/.exclude checksum
+# Disable macOS resource fork files (._*) from being included in tarball
+COPYFILE_DISABLE=1 tar -czf checksum.tar.gz -X checksum/.exclude checksum
 cd checksum
 
 print_success "Package created: ../checksum.tar.gz"
