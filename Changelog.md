@@ -1,5 +1,8 @@
 # Changelog
 
+**2.0.3**
+- fixes
+
 **2.0.0**
 
 - vue3 upgrade (thx to @st3iny)
