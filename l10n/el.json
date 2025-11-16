@@ -3,6 +3,8 @@
     "File not found." : "Το αρχείο δεν βρέθηκε.",
     "Checksum" : "Άθροισμα ελέγχου",
     "Creating a hash checksum of a file." : "Δημιουργία αθροίσματος ελέγχου κατακερματισμού αρχείου.",
+    "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button." : "Επιτρέπει στους χρήστες να δημιουργούν ένα hash checksum ενός αρχείου.\n        Πιθανοί αλγόριθμοι είναι md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 και crc32.\n\n        Απλά ανοίξτε την προβολή λεπτομερειών του αρχείου (Πλαϊνή μπάρα). Θα πρέπει να υπάρχει μια νέα καρτέλα με το όνομα \"Checksum\".\n        Επιλέξτε έναν αλγόριθμο και θα προσπαθήσει να δημιουργήσει ένα hash.\n        Εάν θέλετε έναν άλλο αλγόριθμο, απλά κάντε κλικ στο κουμπί ανανέωσης.",
+    "Hash copied to clipboard." : "Το hash αντιγράφηκε στο πρόχειρο.",
     "Choose Algorithm" : "Επιλογή αλγορίθμου"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
