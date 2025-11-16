@@ -6,48 +6,24 @@
   "license": "agpl",
   "private": true,
   "scripts": {
-    "build": "NODE_ENV=production webpack --config webpack.prod.js",
-    "dev": "NODE_ENV=development webpack --config webpack.dev.js",
-    "watch": "NODE_ENV=development webpack --config webpack.dev.js --watch",
-    "deploy": "rm -rf js/* && npm install && npm run build && cd .. && tar -cvzf checksum.tar.gz -X checksum/.exclude checksum && cd checksum"
+    "build": "NODE_ENV=production webpack --config webpack.config.js",
+    "dev": "NODE_ENV=development webpack --config webpack.config.js",
+    "watch": "NODE_ENV=development webpack --config webpack.config.js --watch",
+    "deploy": "rm -rf js/* && npm install && npm run build && cd .. && tar -cvzf checksum.tar.gz -X checksum/.exclude checksum && cd checksum",
+    "lint": "eslint --ext .js,.vue --ignore-pattern tests src",
+    "lint:fix": "eslint --ext .js,.vue --ignore-pattern tests src --fix"
   },
   "dependencies": {
     "@nextcloud/axios": "^2.4.0",
     "@nextcloud/l10n": "^2.2.0",
     "@nextcloud/router": "^2.0.0",
-    "@nextcloud/vue": "^8.4.0",
-    "vue": "^2.7.0"
+    "@nextcloud/vue": "^9.0.0-rc.2",
+    "vue": "^3.5.16"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.0",
-    "@babel/eslint-parser": "^7.16.3",
-    "@babel/preset-env": "^7.12.11",
     "@nextcloud/browserslist-config": "^1.0.0",
-    "@nextcloud/eslint-config": "^8.0.0",
-    "@nextcloud/eslint-plugin": "^2.0.0",
-    "@nextcloud/webpack-vue-config": "^5.0.0",
-    "babel-eslint": "^10.1.0",
-    "babel-loader": "^9.0.0",
-    "core-js": "^3.8.1",
-    "css-loader": "^6.5.0",
-    "eslint": "^8.4.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-vue": "^9.0.0",
-    "eslint-webpack-plugin": "^2.5.2",
-    "sass": "^1.32.8",
-    "sass-loader": "^13.1.0",
-    "stylelint": "^15.0.0",
-    "stylelint-config-recommended-scss": "^13.0.0",
-    "stylelint-scss": "^5.3.0",
-    "stylelint-webpack-plugin": "^4.1.0",
-    "vue-loader": "^15.9.6",
-    "vue-template-compiler": "^2.6.12",
-    "webpack": "^5.94.0",
-    "webpack-cli": "^5.0.0",
-    "webpack-merge": "^5.7.2"
+    "@nextcloud/eslint-config": "^8.4.2",
+    "@nextcloud/webpack-vue-config": "^6.3.0"
   },
   "browserslist": [
     "extends @nextcloud/browserslist-config"
