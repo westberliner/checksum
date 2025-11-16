@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<phpunit
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+	bootstrap="../bootstrap.php"
+	verbose="true"
+	timeoutForSmallTests="900"
+	timeoutForMediumTests="900"
+	timeoutForLargeTests="900"
+	colors="true"
+	failOnWarning="true"
+	failOnRisky="true"
+>
+	<coverage>
+		<include>
+			<directory suffix=".php">../lib</directory>
+		</include>
+		<exclude>
+			<directory>../vendor</directory>
+		</exclude>
+	</coverage>
+	<testsuites>
+		<testsuite name="unit">
+			<directory>./Unit</directory>
+		</testsuite>
+	</testsuites>
+	<php>
+		<ini name="display_errors" value="1"/>
+		<ini name="error_reporting" value="-1"/>
+	</php>
+</phpunit>
+

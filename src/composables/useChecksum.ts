@@ -3,7 +3,7 @@
  *
  * @author Patrick Herzberg <patrick@westberliner.net>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -19,12 +19,12 @@
  *
  */
 
-import { ref, type Ref } from "vue";
-import { generateUrl } from "@nextcloud/router";
-import { translate as t } from "@nextcloud/l10n";
-import axios, { type AxiosError } from "@nextcloud/axios";
-import algorithms from "../Model/Algorithms";
-import type { Algorithm, FileInfo, ChecksumResponse } from "../types";
+import { ref, type Ref } from 'vue'
+import { generateUrl } from '@nextcloud/router'
+import { translate as t } from '@nextcloud/l10n'
+import axios, { type AxiosError } from '@nextcloud/axios'
+import algorithms from '@/Model/Algorithms'
+import type { Algorithm, FileInfo, ChecksumResponse } from '@/types'
 
 export interface UseChecksumReturn {
   loading: Ref<boolean>;
@@ -34,7 +34,7 @@ export interface UseChecksumReturn {
   fetchChecksum: (
     algorithmType: string,
     byteStart?: number | null,
-    byteEnd?: number | null
+    byteEnd?: number | null,
   ) => Promise<string>;
   resetChecksum: () => void;
   setFileInfo: (info: FileInfo) => void;
@@ -44,84 +44,84 @@ export interface UseChecksumReturn {
  * Composable for checksum calculation and validation
  */
 export function useChecksum(): UseChecksumReturn {
-  // State
-  const loading = ref<boolean>(false);
-  const hash = ref<string>("");
-  const algorithm = ref<Algorithm>(algorithms[0] as Algorithm);
-  const fileInfo = ref<FileInfo | null>(null);
+	// State
+	const loading = ref<boolean>(false)
+	const hash = ref<string>('')
+	const algorithm = ref<Algorithm>(algorithms[0] as Algorithm)
+	const fileInfo = ref<FileInfo | null>(null)
 
-  /**
-   * Fetches the checksum from the server.
-   * @param algorithmType - The hash algorithm type.
-   * @param byteStart - Optional start byte offset.
-   * @param byteEnd - Optional end byte offset.
-   * @returns The calculated hash.
-   * @throws Error if the request fails.
-   */
-  const fetchChecksum = async (
-    algorithmType: string,
-    byteStart: number | null = null,
-    byteEnd: number | null = null
-  ): Promise<string> => {
-    loading.value = true;
+	/**
+	 * Fetches the checksum from the server.
+	 * @param algorithmType - The hash algorithm type.
+	 * @param byteStart - Optional start byte offset.
+	 * @param byteEnd - Optional end byte offset.
+	 * @return The calculated hash.
+	 * @throws Error if the request fails.
+	 */
+	const fetchChecksum = async (
+		algorithmType: string,
+		byteStart: number | null = null,
+		byteEnd: number | null = null,
+	): Promise<string> => {
+		loading.value = true
 
-    const url = generateUrl("/apps/checksum/check");
-    const params: Record<string, string | number> = {
-      source: `${fileInfo.value?.path}/${fileInfo.value?.name}`,
-      type: algorithmType,
-    };
+		const url = generateUrl('/apps/checksum/check')
+		const params: Record<string, string | number> = {
+			source: `${fileInfo.value?.path}/${fileInfo.value?.name}`,
+			type: algorithmType,
+		}
 
-    // Add byte range parameters if they are set
-    if (byteStart !== null) {
-      params.byteStart = byteStart;
-    }
-    if (byteEnd !== null) {
-      params.byteEnd = byteEnd;
-    }
+		// Add byte range parameters if they are set
+		if (byteStart !== null) {
+			params.byteStart = byteStart
+		}
+		if (byteEnd !== null) {
+			params.byteEnd = byteEnd
+		}
 
-    try {
-      const response = await axios.get<ChecksumResponse>(url, { params });
-      loading.value = false;
-      hash.value = response.data.msg;
-      return response.data.msg;
-    } catch (err) {
-      console.error(err);
-      loading.value = false;
-      const error = err as AxiosError<ChecksumResponse>;
-      const errorMsg =
-        error.response?.data?.msg || t("checksum", "Error calculating checksum.");
-      throw new Error(errorMsg);
-    }
-  };
+		try {
+			const response = await axios.get<ChecksumResponse>(url, { params })
+			loading.value = false
+			hash.value = response.data.msg
+			return response.data.msg
+		} catch (err) {
+			console.error(err)
+			loading.value = false
+			const error = err as AxiosError<ChecksumResponse>
+			const errorMsg
+        = error.response?.data?.msg
+        || t('checksum', 'Error calculating checksum.')
+			throw new Error(errorMsg)
+		}
+	}
 
-  /**
-   * Reset the checksum state.
-   */
-  const resetChecksum = (): void => {
-    loading.value = false;
-    algorithm.value = algorithms[0] as Algorithm;
-    hash.value = "";
-  };
+	/**
+	 * Reset the checksum state.
+	 */
+	const resetChecksum = (): void => {
+		loading.value = false
+		algorithm.value = algorithms[0] as Algorithm
+		hash.value = ''
+	}
 
-  /**
-   * Update the file info.
-   * @param info - The file info object.
-   */
-  const setFileInfo = (info: FileInfo): void => {
-    fileInfo.value = info;
-  };
+	/**
+	 * Update the file info.
+	 * @param info - The file info object.
+	 */
+	const setFileInfo = (info: FileInfo): void => {
+		fileInfo.value = info
+	}
 
-  return {
-    // State
-    loading,
-    hash,
-    algorithm,
-    algorithms,
+	return {
+		// State
+		loading,
+		hash,
+		algorithm,
+		algorithms,
 
-    // Methods
-    fetchChecksum,
-    resetChecksum,
-    setFileInfo,
-  };
+		// Methods
+		fetchChecksum,
+		resetChecksum,
+		setFileInfo,
+	}
 }
-

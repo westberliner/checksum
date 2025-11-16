@@ -17,7 +17,7 @@ const customConfig = {
 };
 export default createAppConfig(
   {
-    main: resolve(join("src", "main.js")),
+    main: resolve(join("src", "main.ts")),
   },
   {
     inlineCSS: { relativeCSSInjection: true },

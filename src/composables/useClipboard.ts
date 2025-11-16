@@ -3,7 +3,7 @@
  *
  * @author Patrick Herzberg <patrick@westberliner.net>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -20,7 +20,7 @@
  *
  */
 
-import { ref, type Ref } from "vue";
+import { ref, type Ref } from 'vue'
 
 export interface UseClipboardReturn {
   copied: Ref<boolean>;
@@ -32,50 +32,50 @@ export interface UseClipboardReturn {
  * Composable for clipboard operations
  */
 export function useClipboard(): UseClipboardReturn {
-  const copied = ref<boolean>(false);
+	const copied = ref<boolean>(false)
 
-  /**
-   * Copy text to clipboard.
-   * @param text - The text to copy.
-   * @param fallbackSelector - DOM selector for fallback method.
-   */
-  const copyToClipboard = async (
-    text: string,
-    fallbackSelector: string = "#checksum-hash"
-  ): Promise<void> => {
-    try {
-      if (navigator?.clipboard?.writeText) {
-        await navigator.clipboard.writeText(text);
-      } else {
-        // Fallback for older browsers
-        const copyText = document.querySelector<HTMLInputElement>(fallbackSelector);
-        if (copyText) {
-          copyText.select();
-          document.execCommand("copy");
-        }
-      }
-      copied.value = true;
+	/**
+	 * Copy text to clipboard.
+	 * @param text - The text to copy.
+	 * @param fallbackSelector - DOM selector for fallback method.
+	 */
+	const copyToClipboard = async (
+		text: string,
+		fallbackSelector: string = '#checksum-hash',
+	): Promise<void> => {
+		try {
+			if (navigator?.clipboard?.writeText) {
+				await navigator.clipboard.writeText(text)
+			} else {
+				// Fallback for older browsers
+				const copyText
+          = document.querySelector<HTMLInputElement>(fallbackSelector)
+				if (copyText) {
+					copyText.select()
+					document.execCommand('copy')
+				}
+			}
+			copied.value = true
 
-      // Auto-reset after 3 seconds
-      setTimeout(() => {
-        copied.value = false;
-      }, 3000);
-    } catch (err) {
-      console.error("Failed to copy to clipboard:", err);
-    }
-  };
+			// Auto-reset after 3 seconds
+			setTimeout(() => {
+				copied.value = false
+			}, 3000)
+		} catch (err) {
+			console.error('Failed to copy to clipboard:', err)
+		}
+	}
 
-  /**
-   * Reset the copied state.
-   */
-  const resetCopied = (): void => {
-    copied.value = false;
-  };
+	/**
+	 * Reset the copied state.
+	 */
+	const resetCopied = (): void => {
+		copied.value = false
+	}
 
-  return {
-    copied,
-    copyToClipboard,
-    resetCopied,
-  };
+	return {
+		copied,
+		copyToClipboard,
+		resetCopied,
+	}
 }
-

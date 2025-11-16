@@ -1,4 +1,5 @@
 <?php
+
 /**
  * adding route for ajax callback
  */

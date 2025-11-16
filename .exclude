@@ -9,4 +9,5 @@
 ./vendor
 ./tests
 ./bootstrap.php
+./scripts
 *.neon

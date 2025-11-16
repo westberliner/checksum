@@ -48,7 +48,7 @@ class ChecksumController extends Controller {
 		IRequest $request,
 		IFactory $languageFactory,
 		IRootFolder $rootFolder,
-		IUserSession $userSession
+		IUserSession $userSession,
 	) {
 		parent::__construct($appName, $request);
 
@@ -80,7 +80,6 @@ class ChecksumController extends Controller {
 			);
 		}
 
-		// Validate byte range parameters
 		if ($byteStart !== null && $byteStart < 0) {
 			return new JSONResponse(
 				[
@@ -136,7 +135,7 @@ class ChecksumController extends Controller {
 			$home = $this->rootFolder->getUserFolder($user->getUID());
 			/** @var \OC\Files\Node\File $node */
 			$node = $home->get($source);
-		} catch (NotPermittedException | NoUserException | NotFoundException $e) {
+		} catch (NotPermittedException|NoUserException|NotFoundException $e) {
 			return null;
 		}
 
@@ -178,16 +177,15 @@ class ChecksumController extends Controller {
 			while ($bytesToRead > 0 && !feof($file)) {
 				$currentChunkSize = min($chunkSize, $bytesToRead);
 				$chunk = fread($file, $currentChunkSize);
-				
+
 				if ($chunk === false) {
 					break;
 				}
-				
+
 				hash_update($hash, $chunk);
 				$bytesToRead -= strlen($chunk);
 			}
 		} else {
-			// Read entire file
 			hash_update_stream($hash, $file);
 		}
 
