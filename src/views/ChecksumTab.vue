@@ -45,20 +45,20 @@
       <div v-if="showByteRange" class="byte-range-container">
         <div class="byte-range-inputs">
           <NcTextField
-            :value="byteStart"
+            v-model="byteStart"
             :label="byteStartLabel"
             :placeholder="byteStartPlaceholder"
             type="number"
             min="0"
-            @update:value="updateByteStart"
+            @update:modelValue="updateByteStart"
           />
           <NcTextField
-            :value="byteEnd"
+            v-model="byteEnd"
             :label="byteEndLabel"
             :placeholder="byteEndPlaceholder"
             type="number"
             min="0"
-            @update:value="updateByteEnd"
+            @update:modelValue="updateByteEnd"
           />
         </div>
         <p v-if="rangeError" class="range-error">{{ rangeError }}</p>
@@ -83,227 +83,209 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from "vue";
 import { generateUrl } from "@nextcloud/router";
+import { translate as t } from "@nextcloud/l10n";
 import axios from "@nextcloud/axios";
 import { NcLoadingIcon, NcSelect, NcTextField, NcButton } from "@nextcloud/vue";
 import algorithms from "../Model/Algorithms";
 
-export default {
+defineOptions({
   name: "ChecksumTab",
+});
 
-  components: {
-    NcLoadingIcon,
-    NcSelect,
-    NcTextField,
-    NcButton,
-  },
+const loading = ref(false);
+const copied = ref(false);
+const algorithm = ref(algorithms[0]);
+const hash = ref("");
+const byteStart = ref("");
+const byteEnd = ref("");
+const rangeError = ref("");
+const showByteRange = ref(false);
+const fileInfo = ref(null);
 
-  mixins: [],
+const copyMessage = t("checksum", "Hash copied to clipboard.");
+const byteStartLabel = t("checksum", "Start Byte");
+const byteEndLabel = t("checksum", "End Byte");
+const byteStartPlaceholder = t("checksum", "e.g., 0");
+const byteEndPlaceholder = t("checksum", "e.g., 1024");
+const showByteRangeLabel = t("checksum", "Advanced: Byte Range");
+const hideByteRangeLabel = t("checksum", "Hide Byte Range");
 
-  data() {
-    return {
-      loading: false,
-      copied: false,
-      algorithm: algorithms[0],
-      algorithms,
-      hash: "",
-      copyMessage: t("checksum", "Hash copied to clipboard."),
-      byteStart: "",
-      byteEnd: "",
-      rangeError: "",
-      showByteRange: false,
-      byteRangeLabel: t("checksum", "Byte Range (Optional)"),
-      byteStartLabel: t("checksum", "Start Byte"),
-      byteEndLabel: t("checksum", "End Byte"),
-      byteStartPlaceholder: t("checksum", "e.g., 0"),
-      byteEndPlaceholder: t("checksum", "e.g., 1024"),
-      showByteRangeLabel: t("checksum", "Advanced: Byte Range"),
-      hideByteRangeLabel: t("checksum", "Hide Byte Range"),
-    };
-  },
-
-  computed: {
-    /**
-     * Returns the current active tab.
-     * Needed because AppSidebarTab also uses $parent.activeTab.
-     *
-     * @returns {string}
-     */
-    activeTab() {
-      return this.$parent.activeTab;
-    },
-  },
-
-  methods: {
-    /**
-     * Update current fileInfo and fetch new data.
-     * @param {Object} fileInfo the current file FileInfo.
-     */
-    update(fileInfo) {
-      this.resetState();
-      this.fileInfo = fileInfo;
-    },
-
-    /**
-     * Handles selection change event by triggering hash ajax call.
-     *
-     * @param {Object} algorithm - The selected algorithm object.
-     * @param {string} algorithm.id - The selected algorithm id.
-     * @param {string} algorithm.label - The selected algorithm label.
-     */
-    onAlgorithmChangeHandler(algorithm) {
-      this.hash = "";
-      this.copied = false;
-      if (algorithm && algorithm.id.length) {
-        this.loading = true;
-        this.copied = false;
-        this.getChecksum(algorithm.id);
-      }
-    },
-
-    /**
-     * Handles byte range input changes.
-     */
-    onByteRangeChange() {
-      this.rangeError = "";
-      this.validateByteRange();
-      
-      // Recalculate checksum if algorithm is selected
-      if (this.algorithm && this.algorithm.id.length) {
-        this.hash = "";
-        this.copied = false;
-        this.loading = true;
-        this.getChecksum(this.algorithm.id);
-      }
-    },
-
-    /**
-     * Updates the byte start value.
-     * @param {string} value - The new byte start value.
-     */
-    updateByteStart(value) {
-      this.byteStart = value;
-      this.onByteRangeChange();
-    },
-
-    /**
-     * Updates the byte end value.
-     * @param {string} value - The new byte end value.
-     */
-    updateByteEnd(value) {
-      this.byteEnd = value;
-      this.onByteRangeChange();
-    },
-
-    /**
-     * Toggles the visibility of the byte range section.
-     */
-    toggleByteRange() {
-      this.showByteRange = !this.showByteRange;
-    },
-
-    /**
-     * Validates the byte range inputs.
-     */
-    validateByteRange() {
-      const start = parseInt(this.byteStart, 10);
-      const end = parseInt(this.byteEnd, 10);
-
-      if (this.byteStart !== "" && isNaN(start)) {
-        this.rangeError = t("checksum", "Start byte must be a valid number.");
-        return false;
-      }
-
-      if (this.byteEnd !== "" && isNaN(end)) {
-        this.rangeError = t("checksum", "End byte must be a valid number.");
-        return false;
-      }
-
-      if (this.byteStart !== "" && this.byteEnd !== "" && start >= end) {
-        this.rangeError = t("checksum", "Start byte must be less than end byte.");
-        return false;
-      }
-
-      if (this.byteStart !== "" && start < 0) {
-        this.rangeError = t("checksum", "Start byte must be 0 or greater.");
-        return false;
-      }
-
-      if (this.byteEnd !== "" && end < 0) {
-        this.rangeError = t("checksum", "End byte must be 0 or greater.");
-        return false;
-      }
-
-      return true;
-    },
-
-    /**
-     * @param {string} algorithmType - The hash algorithm type.
-     */
-    getChecksum(algorithmType) {
-      // Validate byte range before making request
-      if (!this.validateByteRange()) {
-        this.loading = false;
-        return;
-      }
-
-      const url = generateUrl("/apps/checksum/check");
-      const params = {
-        source: `${this.fileInfo.path}/${this.fileInfo.name}`,
-        type: algorithmType,
-      };
-      
-      // Add byte range parameters if they are set
-      if (this.byteStart !== "") {
-        params.byteStart = parseInt(this.byteStart, 10);
-      }
-      if (this.byteEnd !== "") {
-        params.byteEnd = parseInt(this.byteEnd, 10);
-      }
-
-      axios
-        .get(url, { params })
-        .then((response) => {
-          this.loading = false;
-          this.hash = response.data.msg;
-        })
-        .catch((err) => {
-          console.error(err);
-          this.loading = false;
-          this.rangeError = err.response?.data?.msg || t("checksum", "Error calculating checksum.");
-        });
-    },
-
-    /**
-     * @param {string} hash - The hash result.
-     */
-    async clipboard() {
-      if (navigator?.clipboard?.writeText) {
-        await navigator.clipboard.writeText(this.hash);
-      } else {
-        const copyText = document.querySelector("#checksum-hash");
-        copyText.select();
-        document.execCommand("copy");
-      }
-
-      this.copied = true;
-    },
-
-    /**
-     * Reset the current view to its default state
-     */
-    resetState() {
-      this.loading = false;
-      this.copied = false;
-      this.algorithm = algorithms[0];
-      this.hash = "";
-      this.byteStart = "";
-      this.byteEnd = "";
-      this.rangeError = "";
-    },
-  },
+/**
+ * @param {Object} info - The current file FileInfo.
+ */
+const update = (info) => {
+  resetState();
+  fileInfo.value = info;
 };
+
+/**
+ * Handles selection change event by triggering hash ajax call.
+ *
+ * @param {Object} selectedAlgorithm - The selected algorithm object.
+ * @param {string} selectedAlgorithm.id - The selected algorithm id.
+ * @param {string} selectedAlgorithm.label - The selected algorithm label.
+ */
+const onAlgorithmChangeHandler = (selectedAlgorithm) => {
+  hash.value = "";
+  copied.value = false;
+  if (selectedAlgorithm && selectedAlgorithm.id.length) {
+    loading.value = true;
+    copied.value = false;
+    getChecksum(selectedAlgorithm.id);
+  }
+};
+
+/**
+ * Handles byte range input changes.
+ */
+const onByteRangeChange = () => {
+  rangeError.value = "";
+  validateByteRange();
+
+  // Recalculate checksum if algorithm is selected
+  if (algorithm.value && algorithm.value.id.length) {
+    hash.value = "";
+    copied.value = false;
+    loading.value = true;
+    getChecksum(algorithm.value.id);
+  }
+};
+
+/**
+ * Updates the byte start value.
+ * @param {string} value - The new byte start value.
+ */
+const updateByteStart = (value) => {
+  byteStart.value = value;
+  onByteRangeChange();
+};
+
+/**
+ * Updates the byte end value.
+ * @param {string} value - The new byte end value.
+ */
+const updateByteEnd = (value) => {
+  byteEnd.value = value;
+  onByteRangeChange();
+};
+
+/**
+ * Toggles the visibility of the byte range section.
+ */
+const toggleByteRange = () => {
+  showByteRange.value = !showByteRange.value;
+};
+
+/**
+ * Validates the byte range inputs.
+ * @returns {boolean} True if valid, false otherwise.
+ */
+const validateByteRange = () => {
+  const start = parseInt(byteStart.value, 10);
+  const end = parseInt(byteEnd.value, 10);
+
+  if (byteStart.value !== "" && isNaN(start)) {
+    rangeError.value = t("checksum", "Start byte must be a valid number.");
+    return false;
+  }
+
+  if (byteEnd.value !== "" && isNaN(end)) {
+    rangeError.value = t("checksum", "End byte must be a valid number.");
+    return false;
+  }
+
+  if (byteStart.value !== "" && byteEnd.value !== "" && start >= end) {
+    rangeError.value = t("checksum", "Start byte must be less than end byte.");
+    return false;
+  }
+
+  if (byteStart.value !== "" && start < 0) {
+    rangeError.value = t("checksum", "Start byte must be 0 or greater.");
+    return false;
+  }
+
+  if (byteEnd.value !== "" && end < 0) {
+    rangeError.value = t("checksum", "End byte must be 0 or greater.");
+    return false;
+  }
+
+  return true;
+};
+
+/**
+ * Fetches the checksum from the server.
+ * @param {string} algorithmType - The hash algorithm type.
+ */
+const getChecksum = (algorithmType) => {
+  // Validate byte range before making request
+  if (!validateByteRange()) {
+    loading.value = false;
+    return;
+  }
+
+  const url = generateUrl("/apps/checksum/check");
+  const params = {
+    source: `${fileInfo.value.path}/${fileInfo.value.name}`,
+    type: algorithmType,
+  };
+
+  // Add byte range parameters if they are set
+  if (byteStart.value !== "") {
+    params.byteStart = parseInt(byteStart.value, 10);
+  }
+  if (byteEnd.value !== "") {
+    params.byteEnd = parseInt(byteEnd.value, 10);
+  }
+
+  axios
+    .get(url, { params })
+    .then((response) => {
+      loading.value = false;
+      hash.value = response.data.msg;
+    })
+    .catch((err) => {
+      console.error(err);
+      loading.value = false;
+      rangeError.value =
+        err.response?.data?.msg || t("checksum", "Error calculating checksum.");
+    });
+};
+
+/**
+ * Copies the hash to clipboard.
+ */
+const clipboard = async () => {
+  if (navigator?.clipboard?.writeText) {
+    await navigator.clipboard.writeText(hash.value);
+  } else {
+    const copyText = document.querySelector("#checksum-hash");
+    copyText.select();
+    document.execCommand("copy");
+  }
+
+  copied.value = true;
+};
+
+/**
+ * Reset the current view to its default state.
+ */
+const resetState = () => {
+  loading.value = false;
+  copied.value = false;
+  algorithm.value = algorithms[0];
+  hash.value = "";
+  byteStart.value = "";
+  byteEnd.value = "";
+  rangeError.value = "";
+};
+
+// Expose methods for parent component to call
+defineExpose({
+  update,
+});
 </script>
 
 <style lang="scss" scoped>
