@@ -1,6 +1,12 @@
 Changelog
 =========
 
+**2.0.0**
+- vue3 upgrade (thx to @st3iny)
+
+**1.2.7**
+- Updated info.xml > removed max version. (thx to @cociweb)
+
 **1.2.6**
 - Updated info.xml > bump nextcloud support to version 31.
 

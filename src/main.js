@@ -21,7 +21,7 @@
  */
 import { createApp } from 'vue'
 import { translate as t } from '@nextcloud/l10n'
-import ChecksumTab from './views/ChecksumTab'
+import ChecksumTab from './views/ChecksumTab.vue'
 
 let tabApp = null
 let tabVm = null

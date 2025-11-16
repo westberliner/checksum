@@ -5,13 +5,22 @@
   "author": "westberliner",
   "license": "agpl",
   "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^24.0.0",
+    "npm": "^11.3.0"
+  },
   "scripts": {
-    "build": "NODE_ENV=production webpack --config webpack.config.js",
-    "dev": "NODE_ENV=development webpack --config webpack.config.js",
-    "watch": "NODE_ENV=development webpack --config webpack.config.js --watch",
+    "build": "vite build",
+    "dev": "vite build --mode development",
+    "watch": "vite build --mode development --watch",
     "deploy": "rm -rf js/* && npm install && npm run build && cd .. && tar -cvzf checksum.tar.gz -X checksum/.exclude checksum && cd checksum",
-    "lint": "eslint --ext .js,.vue --ignore-pattern tests src",
-    "lint:fix": "eslint --ext .js,.vue --ignore-pattern tests src --fix"
+    "format": "prettier --debug-check .",
+    "format:fix": "prettier --write .",
+    "lint": "eslint --ext .js,.ts,.vue src",
+    "lint:fix": "eslint --ext .js,.ts,.vue src --fix",
+    "stylelint": "stylelint src/**/*{.scss,.vue,.css}",
+    "stylelint:fix": "stylelint src --fix"
   },
   "dependencies": {
     "@nextcloud/axios": "^2.4.0",
@@ -23,7 +32,13 @@
   "devDependencies": {
     "@nextcloud/browserslist-config": "^1.0.0",
     "@nextcloud/eslint-config": "^8.4.2",
-    "@nextcloud/webpack-vue-config": "^6.3.0"
+    "@nextcloud/prettier-config": "^1.2.0",
+    "@nextcloud/stylelint-config": "^3.1.1",
+    "@nextcloud/vite-config": "^2.5.2",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.6.1",
+    "vite": "^7.2.2"
   },
   "browserslist": [
     "extends @nextcloud/browserslist-config"
