@@ -14,41 +14,60 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
- *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
-import { ref } from "vue";
+import { ref, type Ref } from "vue";
 import { generateUrl } from "@nextcloud/router";
 import { translate as t } from "@nextcloud/l10n";
-import axios from "@nextcloud/axios";
+import axios, { type AxiosError } from "@nextcloud/axios";
 import algorithms from "../Model/Algorithms";
+import type { Algorithm, FileInfo, ChecksumResponse } from "../types";
+
+export interface UseChecksumReturn {
+  loading: Ref<boolean>;
+  hash: Ref<string>;
+  algorithm: Ref<Algorithm>;
+  algorithms: Algorithm[];
+  fetchChecksum: (
+    algorithmType: string,
+    byteStart?: number | null,
+    byteEnd?: number | null
+  ) => Promise<string>;
+  resetChecksum: () => void;
+  setFileInfo: (info: FileInfo) => void;
+}
 
 /**
  * Composable for checksum calculation and validation
  */
-export function useChecksum() {
+export function useChecksum(): UseChecksumReturn {
   // State
-  const loading = ref(false);
-  const hash = ref("");
-  const algorithm = ref(algorithms[0]);
-  const fileInfo = ref(null);
+  const loading = ref<boolean>(false);
+  const hash = ref<string>("");
+  const algorithm = ref<Algorithm>(algorithms[0] as Algorithm);
+  const fileInfo = ref<FileInfo | null>(null);
 
   /**
    * Fetches the checksum from the server.
-   * @param {string} algorithmType - The hash algorithm type.
-   * @param {number|null} byteStart - Optional start byte offset.
-   * @param {number|null} byteEnd - Optional end byte offset.
-   * @returns {Promise<string|null>} The calculated hash or null on error.
+   * @param algorithmType - The hash algorithm type.
+   * @param byteStart - Optional start byte offset.
+   * @param byteEnd - Optional end byte offset.
+   * @returns The calculated hash.
+   * @throws Error if the request fails.
    */
-  const fetchChecksum = async (algorithmType, byteStart = null, byteEnd = null) => {
+  const fetchChecksum = async (
+    algorithmType: string,
+    byteStart: number | null = null,
+    byteEnd: number | null = null
+  ): Promise<string> => {
     loading.value = true;
 
     const url = generateUrl("/apps/checksum/check");
-    const params = {
-      source: `${fileInfo.value.path}/${fileInfo.value.name}`,
+    const params: Record<string, string | number> = {
+      source: `${fileInfo.value?.path}/${fileInfo.value?.name}`,
       type: algorithmType,
     };
 
@@ -61,14 +80,16 @@ export function useChecksum() {
     }
 
     try {
-      const response = await axios.get(url, { params });
+      const response = await axios.get<ChecksumResponse>(url, { params });
       loading.value = false;
       hash.value = response.data.msg;
       return response.data.msg;
     } catch (err) {
       console.error(err);
       loading.value = false;
-      const errorMsg = err.response?.data?.msg || t("checksum", "Error calculating checksum.");
+      const error = err as AxiosError<ChecksumResponse>;
+      const errorMsg =
+        error.response?.data?.msg || t("checksum", "Error calculating checksum.");
       throw new Error(errorMsg);
     }
   };
@@ -76,25 +97,28 @@ export function useChecksum() {
   /**
    * Reset the checksum state.
    */
-  const resetChecksum = () => {
+  const resetChecksum = (): void => {
     loading.value = false;
-    algorithm.value = algorithms[0];
+    algorithm.value = algorithms[0] as Algorithm;
     hash.value = "";
   };
 
   /**
    * Update the file info.
-   * @param {Object} info - The file info object.
+   * @param info - The file info object.
    */
-  const setFileInfo = (info) => {
+  const setFileInfo = (info: FileInfo): void => {
     fileInfo.value = info;
   };
 
   return {
+    // State
     loading,
     hash,
     algorithm,
     algorithms,
+
+    // Methods
     fetchChecksum,
     resetChecksum,
     setFileInfo,

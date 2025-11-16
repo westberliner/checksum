@@ -20,33 +20,42 @@
  *
  */
 
-import { ref } from "vue";
+import { ref, type Ref } from "vue";
+
+export interface UseClipboardReturn {
+  copied: Ref<boolean>;
+  copyToClipboard: (text: string, fallbackSelector?: string) => Promise<void>;
+  resetCopied: () => void;
+}
 
 /**
  * Composable for clipboard operations
  */
-export function useClipboard() {
-  const copied = ref(false);
+export function useClipboard(): UseClipboardReturn {
+  const copied = ref<boolean>(false);
 
   /**
    * Copy text to clipboard.
-   * @param {string} text - The text to copy.
-   * @param {string} fallbackSelector - DOM selector for fallback method.
+   * @param text - The text to copy.
+   * @param fallbackSelector - DOM selector for fallback method.
    */
-  const copyToClipboard = async (text, fallbackSelector = "#checksum-hash") => {
+  const copyToClipboard = async (
+    text: string,
+    fallbackSelector: string = "#checksum-hash"
+  ): Promise<void> => {
     try {
       if (navigator?.clipboard?.writeText) {
         await navigator.clipboard.writeText(text);
       } else {
         // Fallback for older browsers
-        const copyText = document.querySelector(fallbackSelector);
+        const copyText = document.querySelector<HTMLInputElement>(fallbackSelector);
         if (copyText) {
           copyText.select();
           document.execCommand("copy");
         }
       }
       copied.value = true;
-      
+
       // Auto-reset after 3 seconds
       setTimeout(() => {
         copied.value = false;
@@ -59,7 +68,7 @@ export function useClipboard() {
   /**
    * Reset the copied state.
    */
-  const resetCopied = () => {
+  const resetCopied = (): void => {
     copied.value = false;
   };
 

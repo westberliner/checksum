@@ -4,6 +4,7 @@
 
 - vue3 upgrade (thx to @st3iny)
 - switched to vite build
+- switch to typescript
 - implemented byte range option
 
 **1.2.7**

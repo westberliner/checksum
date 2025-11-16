@@ -20,23 +20,38 @@
  *
  */
 
-import { ref, computed } from "vue";
+import { ref, computed, type Ref, type ComputedRef } from "vue";
 import { translate as t } from "@nextcloud/l10n";
+
+export interface UseByteRangeReturn {
+  byteStart: Ref<string>;
+  byteEnd: Ref<string>;
+  rangeError: Ref<string>;
+  showByteRange: Ref<boolean>;
+  parsedByteStart: ComputedRef<number | null>;
+  parsedByteEnd: ComputedRef<number | null>;
+  hasByteRange: ComputedRef<boolean>;
+  validateByteRange: () => boolean;
+  toggleByteRange: () => void;
+  resetByteRange: () => void;
+  clearError: () => void;
+}
 
 /**
  * Composable for byte range management and validation
  */
-export function useByteRange() {
-  const byteStart = ref("");
-  const byteEnd = ref("");
-  const rangeError = ref("");
-  const showByteRange = ref(false);
+export function useByteRange(): UseByteRangeReturn {
+  // State
+  const byteStart = ref<string>("");
+  const byteEnd = ref<string>("");
+  const rangeError = ref<string>("");
+  const showByteRange = ref<boolean>(false);
 
   /**
    * Validates the byte range inputs.
-   * @returns {boolean} True if valid, false otherwise.
+   * @returns True if valid, false otherwise.
    */
-  const validateByteRange = () => {
+  const validateByteRange = (): boolean => {
     const start = parseInt(byteStart.value, 10);
     const end = parseInt(byteEnd.value, 10);
 
@@ -72,35 +87,35 @@ export function useByteRange() {
   /**
    * Get the parsed byte start value.
    */
-  const parsedByteStart = computed(() => {
+  const parsedByteStart = computed<number | null>(() => {
     return byteStart.value !== "" ? parseInt(byteStart.value, 10) : null;
   });
 
   /**
    * Get the parsed byte end value.
    */
-  const parsedByteEnd = computed(() => {
+  const parsedByteEnd = computed<number | null>(() => {
     return byteEnd.value !== "" ? parseInt(byteEnd.value, 10) : null;
   });
 
   /**
    * Check if byte range is active (at least one field filled).
    */
-  const hasByteRange = computed(() => {
+  const hasByteRange = computed<boolean>(() => {
     return byteStart.value !== "" || byteEnd.value !== "";
   });
 
   /**
    * Toggle the visibility of the byte range section.
    */
-  const toggleByteRange = () => {
+  const toggleByteRange = (): void => {
     showByteRange.value = !showByteRange.value;
   };
 
   /**
    * Reset the byte range state.
    */
-  const resetByteRange = () => {
+  const resetByteRange = (): void => {
     byteStart.value = "";
     byteEnd.value = "";
     rangeError.value = "";
@@ -110,18 +125,23 @@ export function useByteRange() {
   /**
    * Clear any existing error.
    */
-  const clearError = () => {
+  const clearError = (): void => {
     rangeError.value = "";
   };
 
   return {
+    // State
     byteStart,
     byteEnd,
     rangeError,
     showByteRange,
+
+    // Computed
     parsedByteStart,
     parsedByteEnd,
     hasByteRange,
+
+    // Methods
     validateByteRange,
     toggleByteRange,
     resetByteRange,

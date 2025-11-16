@@ -1,4 +1,7 @@
-export default [
+import { translate as t } from "@nextcloud/l10n";
+import type { Algorithm } from "../types";
+
+const algorithms: Algorithm[] = [
   { id: "", label: t("checksum", "Choose Algorithm") },
   { id: "md5", label: "MD5" },
   { id: "sha1", label: "SHA1" },
@@ -10,3 +13,6 @@ export default [
   { id: "crc32", label: "CRC32" },
   { id: "crc32b", label: "CRC32b" },
 ];
+
+export default algorithms;
+

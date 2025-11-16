@@ -35,7 +35,6 @@
     
     <div class="byte-range-section">
       <NcButton
-        type="tertiary"
         :aria-label="showByteRange ? hideByteRangeLabel : showByteRangeLabel"
         @click="toggleByteRange"
       >
@@ -74,7 +73,7 @@
       </span>
     </p>
     <input
-      disabled="disabled"
+      :disabled="true"
       style="opacity: 0"
       id="checksum-hash"
       :value="hash"
@@ -83,12 +82,13 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { translate as t } from "@nextcloud/l10n";
 import { NcLoadingIcon, NcSelect, NcTextField, NcButton } from "@nextcloud/vue";
 import { useChecksum } from "../composables/useChecksum";
 import { useByteRange } from "../composables/useByteRange";
 import { useClipboard } from "../composables/useClipboard";
+import type { Algorithm, FileInfo } from "../types";
 
 defineOptions({
   name: "ChecksumTab",
@@ -129,18 +129,16 @@ const hideByteRangeLabel = t("checksum", "Hide Byte Range");
 
 /**
  * Update current fileInfo and fetch new data.
- * @param {Object} info - The current file FileInfo.
  */
-const update = (info) => {
+const update = (info: FileInfo): void => {
   resetState();
   setFileInfo(info);
 };
 
 /**
  * Handles selection change event by triggering hash ajax call.
- * @param {Object} selectedAlgorithm - The selected algorithm object.
  */
-const onAlgorithmChangeHandler = async (selectedAlgorithm) => {
+const onAlgorithmChangeHandler = async (selectedAlgorithm: Algorithm): Promise<void> => {
   hash.value = "";
   resetCopied();
   
@@ -151,9 +149,8 @@ const onAlgorithmChangeHandler = async (selectedAlgorithm) => {
 
 /**
  * Calculate the checksum with current byte range settings.
- * @param {string} algorithmType - The hash algorithm type.
  */
-const calculateChecksum = async (algorithmType) => {
+const calculateChecksum = async (algorithmType: string): Promise<void> => {
   if (!validateByteRange()) {
     return;
   }
@@ -161,32 +158,30 @@ const calculateChecksum = async (algorithmType) => {
   try {
     await fetchChecksum(algorithmType, parsedByteStart.value, parsedByteEnd.value);
   } catch (err) {
-    rangeError.value = err.message;
+    rangeError.value = (err as Error).message;
   }
 };
 
 /**
  * Updates the byte start value.
- * @param {string} value - The new byte start value.
  */
-const updateByteStart = (value) => {
-  byteStart.value = value;
+const updateByteStart = (value: string | number): void => {
+  byteStart.value = String(value);
   onByteRangeChange();
 };
 
 /**
  * Updates the byte end value.
- * @param {string} value - The new byte end value.
  */
-const updateByteEnd = (value) => {
-  byteEnd.value = value;
+const updateByteEnd = (value: string | number): void => {
+  byteEnd.value = String(value);
   onByteRangeChange();
 };
 
 /**
  * Handles byte range input changes.
  */
-const onByteRangeChange = async () => {
+const onByteRangeChange = async (): Promise<void> => {
   clearError();
   
   if (algorithm.value && algorithm.value.id.length) {
@@ -199,13 +194,12 @@ const onByteRangeChange = async () => {
 /**
  * Reset the current view to its default state.
  */
-const resetState = () => {
+const resetState = (): void => {
   resetChecksum();
   resetByteRange();
   resetCopied();
 };
 
-// Expose methods for parent component to call
 defineExpose({
   update,
 });
