@@ -20,197 +20,207 @@
   -
   -->
 <template>
-	<div>
-		<!-- checksum content -->
-		<br>
-		<NcSelect v-model="algorithm"
-			:options="algorithms"
-			track-by="id"
-			label="label"
-			@update:modelValue="onAlgorithmChangeHandler" />
-		<br>
-		<br>
+  <div>
+    <!-- checksum content -->
+    <br />
+    <NcSelect
+      v-model="algorithm"
+      :options="algorithms"
+      track-by="id"
+      label="label"
+      @update:modelValue="onAlgorithmChangeHandler"
+    />
+    <br />
+    <br />
 
-		<div class="byte-range-section">
-			<NcButton :aria-label="showByteRange ? hideByteRangeLabel : showByteRangeLabel"
-				@click="toggleByteRange">
-				{{
-					showByteRange ? "▼ " + hideByteRangeLabel : "▶ " + showByteRangeLabel
-				}}
-			</NcButton>
+    <div class="byte-range-section">
+      <NcButton
+        :aria-label="showByteRange ? hideByteRangeLabel : showByteRangeLabel"
+        @click="toggleByteRange"
+      >
+        {{
+          showByteRange ? "▼ " + hideByteRangeLabel : "▶ " + showByteRangeLabel
+        }}
+      </NcButton>
 
-			<div v-if="showByteRange" class="byte-range-container">
-				<div class="byte-range-inputs">
-					<NcTextField v-model="byteStart"
-						:label="byteStartLabel"
-						:placeholder="byteStartPlaceholder"
-						type="number"
-						min="0"
-						@update:modelValue="updateByteStart" />
-					<NcTextField v-model="byteEnd"
-						:label="byteEndLabel"
-						:placeholder="byteEndPlaceholder"
-						type="number"
-						min="0"
-						@update:modelValue="updateByteEnd" />
-				</div>
-				<p v-if="rangeError" class="range-error">
-					{{ rangeError }}
-				</p>
-			</div>
-		</div>
-		<br>
+      <div v-if="showByteRange" class="byte-range-container">
+        <div class="byte-range-inputs">
+          <NcTextField
+            v-model="byteStart"
+            :label="byteStartLabel"
+            :placeholder="byteStartPlaceholder"
+            type="number"
+            min="0"
+            @update:modelValue="updateByteStart"
+          />
+          <NcTextField
+            v-model="byteEnd"
+            :label="byteEndLabel"
+            :placeholder="byteEndPlaceholder"
+            type="number"
+            min="0"
+            @update:modelValue="updateByteEnd"
+          />
+        </div>
+        <p v-if="rangeError" class="range-error">
+          {{ rangeError }}
+        </p>
+      </div>
+    </div>
+    <br />
 
-		<NcLoadingIcon v-if="loading" :size="40" />
-		<p v-else class="checksum-hash-result" @click="copyToClipboard(hash)">
-			<span v-if="!loading && algorithm && algorithm.id !== ''">
-				<strong>{{ algorithm.label }}:<br></strong>
-				<span>{{ hash }}</span>
-			</span>
-		</p>
-		<input id="checksum-hash"
-			:disabled="true"
-			style="opacity: 0"
-			:value="hash">
-		<p v-if="copied">
-			{{ copyMessage }}
-		</p>
-	</div>
+    <NcLoadingIcon v-if="loading" :size="40" />
+    <p v-else class="checksum-hash-result" @click="copyToClipboard(hash)">
+      <span v-if="!loading && algorithm && algorithm.id !== ''">
+        <strong>{{ algorithm.label }}:<br /></strong>
+        <span>{{ hash }}</span>
+      </span>
+    </p>
+    <input
+      id="checksum-hash"
+      :disabled="true"
+      style="opacity: 0"
+      :value="hash"
+    />
+    <p v-if="copied">
+      {{ copyMessage }}
+    </p>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { translate as t } from '@nextcloud/l10n'
-import { NcLoadingIcon, NcSelect, NcTextField, NcButton } from '@nextcloud/vue'
-import { useChecksum } from '@/composables/useChecksum'
-import { useByteRange } from '@/composables/useByteRange'
-import { useClipboard } from '@/composables/useClipboard'
+import { translate as t } from "@nextcloud/l10n";
+import { NcLoadingIcon, NcSelect, NcTextField, NcButton } from "@nextcloud/vue";
+import { useChecksum } from "@/composables/useChecksum";
+import { useByteRange } from "@/composables/useByteRange";
+import { useClipboard } from "@/composables/useClipboard";
 // eslint-disable-next-line
-import type { Algorithm, FileInfo } from '@/types'
+import type { Algorithm, FileInfo } from "@/types";
 
 defineOptions({
-	name: 'ChecksumTab',
-})
+  name: "ChecksumTab",
+});
 
 const {
-	loading,
-	hash,
-	algorithm,
-	algorithms,
-	fetchChecksum,
-	resetChecksum,
-	setFileInfo,
-} = useChecksum()
+  loading,
+  hash,
+  algorithm,
+  algorithms,
+  fetchChecksum,
+  resetChecksum,
+  setFileInfo,
+} = useChecksum();
 
 const {
-	byteStart,
-	byteEnd,
-	rangeError,
-	showByteRange,
-	parsedByteStart,
-	parsedByteEnd,
-	validateByteRange,
-	toggleByteRange,
-	resetByteRange,
-	clearError,
-} = useByteRange()
+  byteStart,
+  byteEnd,
+  rangeError,
+  showByteRange,
+  parsedByteStart,
+  parsedByteEnd,
+  validateByteRange,
+  toggleByteRange,
+  resetByteRange,
+  clearError,
+} = useByteRange();
 
-const { copied, copyToClipboard, resetCopied } = useClipboard()
+const { copied, copyToClipboard, resetCopied } = useClipboard();
 
-const copyMessage = t('checksum', 'Hash copied to clipboard.')
-const byteStartLabel = t('checksum', 'Start Byte')
-const byteEndLabel = t('checksum', 'End Byte')
-const byteStartPlaceholder = t('checksum', 'e.g., 0')
-const byteEndPlaceholder = t('checksum', 'e.g., 1024')
-const showByteRangeLabel = t('checksum', 'Advanced: Byte Range')
-const hideByteRangeLabel = t('checksum', 'Hide Byte Range')
+const copyMessage = t("checksum", "Hash copied to clipboard.");
+const byteStartLabel = t("checksum", "Start Byte");
+const byteEndLabel = t("checksum", "End Byte");
+const byteStartPlaceholder = t("checksum", "e.g., 0");
+const byteEndPlaceholder = t("checksum", "e.g., 1024");
+const showByteRangeLabel = t("checksum", "Advanced: Byte Range");
+const hideByteRangeLabel = t("checksum", "Hide Byte Range");
 
 /**
  * Update current fileInfo and fetch new data.
  * @param info
  */
 const update = (info: FileInfo): void => {
-	resetState()
-	setFileInfo(info)
-}
+  resetState();
+  setFileInfo(info);
+};
 
 /**
  * Handles selection change event by triggering hash ajax call.
  * @param selectedAlgorithm
  */
 const onAlgorithmChangeHandler = async (
-	selectedAlgorithm: Algorithm,
+  selectedAlgorithm: Algorithm,
 ): Promise<void> => {
-	hash.value = ''
-	resetCopied()
+  hash.value = "";
+  resetCopied();
 
-	if (selectedAlgorithm && selectedAlgorithm.id.length) {
-		await calculateChecksum(selectedAlgorithm.id)
-	}
-}
+  if (selectedAlgorithm && selectedAlgorithm.id.length) {
+    await calculateChecksum(selectedAlgorithm.id);
+  }
+};
 
 /**
  * Calculate the checksum with current byte range settings.
  * @param algorithmType
  */
 const calculateChecksum = async (algorithmType: string): Promise<void> => {
-	if (!validateByteRange()) {
-		return
-	}
+  if (!validateByteRange()) {
+    return;
+  }
 
-	try {
-		await fetchChecksum(
-			algorithmType,
-			parsedByteStart.value,
-			parsedByteEnd.value,
-		)
-	} catch (err) {
-		rangeError.value = (err as Error).message
-	}
-}
+  try {
+    await fetchChecksum(
+      algorithmType,
+      parsedByteStart.value,
+      parsedByteEnd.value,
+    );
+  } catch (err) {
+    rangeError.value = (err as Error).message;
+  }
+};
 
 /**
  * Updates the byte start value.
  * @param value
  */
 const updateByteStart = (value: string | number): void => {
-	byteStart.value = String(value)
-	onByteRangeChange()
-}
+  byteStart.value = String(value);
+  onByteRangeChange();
+};
 
 /**
  * Updates the byte end value.
  * @param value
  */
 const updateByteEnd = (value: string | number): void => {
-	byteEnd.value = String(value)
-	onByteRangeChange()
-}
+  byteEnd.value = String(value);
+  onByteRangeChange();
+};
 
 /**
  * Handles byte range input changes.
  */
 const onByteRangeChange = async (): Promise<void> => {
-	clearError()
+  clearError();
 
-	if (algorithm.value && algorithm.value.id.length) {
-		hash.value = ''
-		resetCopied()
-		await calculateChecksum(algorithm.value.id)
-	}
-}
+  if (algorithm.value && algorithm.value.id.length) {
+    hash.value = "";
+    resetCopied();
+    await calculateChecksum(algorithm.value.id);
+  }
+};
 
 /**
  * Reset the current view to its default state.
  */
 const resetState = (): void => {
-	resetChecksum()
-	resetByteRange()
-	resetCopied()
-}
+  resetChecksum();
+  resetByteRange();
+  resetCopied();
+};
 
 defineExpose({
-	update,
-})
+  update,
+});
 </script>
 
 <style lang="scss" scoped>

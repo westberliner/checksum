@@ -19,83 +19,83 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import { createApp, type App } from 'vue'
-import { translate as t } from '@nextcloud/l10n'
-import ChecksumTab from './views/ChecksumTab.vue'
-import type { FileInfo } from './types'
+import { createApp, type App } from "vue";
+import { translate as t } from "@nextcloud/l10n";
+import ChecksumTab from "./views/ChecksumTab.vue";
+import type { FileInfo } from "./types";
 
 // Define the sidebar tab configuration
 interface SidebarTabConfig {
-	id: string
-	name: string
-	icon: string
-	mount: (el: HTMLElement, fileInfo: FileInfo, context: unknown) => void
-	update: (fileInfo: FileInfo) => void
-	destroy: () => void
-	enabled: (fileInfo: FileInfo) => boolean
+  id: string;
+  name: string;
+  icon: string;
+  mount: (el: HTMLElement, fileInfo: FileInfo, context: unknown) => void;
+  update: (fileInfo: FileInfo) => void;
+  destroy: () => void;
+  enabled: (fileInfo: FileInfo) => boolean;
 }
 
 // Define the sidebar tab interface
 interface SidebarTab {
-	id: string
-	name: string
-	icon: string
-	mount: (el: HTMLElement, fileInfo: FileInfo, context: unknown) => void
-	update: (fileInfo: FileInfo) => void
-	destroy: () => void
-	enabled: (fileInfo: FileInfo) => boolean
+  id: string;
+  name: string;
+  icon: string;
+  mount: (el: HTMLElement, fileInfo: FileInfo, context: unknown) => void;
+  update: (fileInfo: FileInfo) => void;
+  destroy: () => void;
+  enabled: (fileInfo: FileInfo) => boolean;
 }
 
 // Extend global Window interface
 declare global {
-	interface Window {
-		OCA: {
-			Files?: {
-				Sidebar?: {
-					Tab: new (config: SidebarTabConfig) => SidebarTab
-					registerTab: (tab: SidebarTab) => void
-				}
-			}
-		}
-	}
+  interface Window {
+    OCA: {
+      Files?: {
+        Sidebar?: {
+          Tab: new (config: SidebarTabConfig) => SidebarTab;
+          registerTab: (tab: SidebarTab) => void;
+        };
+      };
+    };
+  }
 }
 
 // Define the ChecksumTab component instance type
 interface ChecksumTabInstance {
-	update: (fileInfo: FileInfo) => void
+  update: (fileInfo: FileInfo) => void;
 }
 
-let tabApp: App<Element> | null = null
-let tabVm: ChecksumTabInstance | null = null
+let tabApp: App<Element> | null = null;
+let tabVm: ChecksumTabInstance | null = null;
 
-window.addEventListener('DOMContentLoaded', () => {
-	if (window.OCA?.Files?.Sidebar) {
-		const checksumTab = new window.OCA.Files.Sidebar.Tab({
-			id: 'checksum',
-			name: t('checksum', 'Checksum'),
-			icon: 'icon-category-auth',
+window.addEventListener("DOMContentLoaded", () => {
+  if (window.OCA?.Files?.Sidebar) {
+    const checksumTab = new window.OCA.Files.Sidebar.Tab({
+      id: "checksum",
+      name: t("checksum", "Checksum"),
+      icon: "icon-category-auth",
 
-			mount(el: HTMLElement, fileInfo: FileInfo): void {
-				// Destroy old tab if present
-				tabApp?.unmount()
+      mount(el: HTMLElement, fileInfo: FileInfo): void {
+        // Destroy old tab if present
+        tabApp?.unmount();
 
-				tabApp = createApp(ChecksumTab)
-				const vm = tabApp.mount(el) as unknown as ChecksumTabInstance
-				tabVm = vm
-				tabVm.update(fileInfo)
-			},
-			update(fileInfo: FileInfo): void {
-				tabVm?.update(fileInfo)
-			},
-			destroy(): void {
-				tabApp?.unmount()
-				tabApp = null
-				tabVm = null
-			},
-			enabled(fileInfo: FileInfo): boolean {
-				return fileInfo.type === 'file'
-			},
-		})
-		window.OCA.Files.Sidebar.registerTab(checksumTab)
-	}
-})
+        tabApp = createApp(ChecksumTab);
+        const vm = tabApp.mount(el) as unknown as ChecksumTabInstance;
+        tabVm = vm;
+        tabVm.update(fileInfo);
+      },
+      update(fileInfo: FileInfo): void {
+        tabVm?.update(fileInfo);
+      },
+      destroy(): void {
+        tabApp?.unmount();
+        tabApp = null;
+        tabVm = null;
+      },
+      enabled(fileInfo: FileInfo): boolean {
+        return fileInfo.type === "file";
+      },
+    });
+    window.OCA.Files.Sidebar.registerTab(checksumTab);
+  }
+});

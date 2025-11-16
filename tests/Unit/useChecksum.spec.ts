@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { useChecksum } from '../../src/composables/useChecksum'
+import { useChecksum } from '@/composables/useChecksum'
 import axios from '@nextcloud/axios'
 
 // Mock axios

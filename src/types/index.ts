@@ -33,6 +33,6 @@ export interface FileInfo {
 }
 
 export interface ChecksumResponse {
-  response: 'success' | 'error';
+  response: "success" | "error";
   msg: string;
 }

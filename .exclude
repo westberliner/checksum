@@ -1,6 +1,8 @@
 .*
 ./webpack.*.js
 ./stylelint.config.js
+./vite.config.js
+./vitest.config.ts
 ./*.json
 *.log
 *.lock
@@ -11,3 +13,7 @@
 ./bootstrap.php
 ./scripts
 *.neon
+*.spec.ts
+*.test.ts
+psalm.xml
+psalm-baseline.xml
