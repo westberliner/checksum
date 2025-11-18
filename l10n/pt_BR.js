@@ -2,11 +2,21 @@ OC.L10N.register(
     "checksum",
     {
     "The algorithm type \"%s\" is not a valid or supported algorithm type." : "O tipo de algoritmo \"%s\" não é um tipo de algoritmo válido ou compatível.",
+    "Start byte must be 0 or greater." : "O byte inicial deve ser 0 ou maior.",
+    "End byte must be 0 or greater." : "O byte final deve ser 0 ou maior.",
     "File not found." : "Arquivo não encontrado.",
     "Checksum" : "Checksum",
     "Creating a hash checksum of a file." : "Criando uma soma de verificação hash de um arquivo.",
     "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button." : "Permite que os usuários criem uma soma de verificação hash de um arquivo.\nOs algoritmos possíveis são md5, sha1, sha256, sha384, sha512, sha3-512 e crc32.\n\nBasta abrir a visualização de detalhes do arquivo (barra lateral). Deve haver uma nova aba chamada \"Checksum\".\nSelecione um algoritmo e ele tentará gerar um hash.\nSe você quiser um outro algoritmo, basta clicar no botão recarregar.",
     "Hash copied to clipboard." : "Hash copiado para a área de transferência.",
-    "Choose Algorithm" : "Escolha Algoritmo"
+    "Start Byte" : "Byte Inicial",
+    "End Byte" : "Byte Final",
+    "e.g., 0" : "p. ex., 0",
+    "e.g., 1024" : "p. ex., 1024",
+    "Advanced: Byte Range" : "Avançado: Intervalo de Bytes",
+    "Hide Byte Range" : "Ocultar Intervalo de Bytes",
+    "Choose Algorithm" : "Escolha Algoritmo",
+    "Start byte must be a valid number." : "O byte inicial deve ser um número válido.",
+    "End byte must be a valid number." : "O byte final deve ser um número válido."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
