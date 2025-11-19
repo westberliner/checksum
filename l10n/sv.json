@@ -1,10 +1,22 @@
 { "translations": {
     "The algorithm type \"%s\" is not a valid or supported algorithm type." : "Algoritmtypen  \"%s\" är inte giltig eller så stöds den inte.",
+    "Start byte must be 0 or greater." : "Startposition måste vara 0 eller större.",
+    "End byte must be 0 or greater." : "Slutposition måste vara 0 eller större",
+    "Start byte must be less than end byte." : "Startposition måste vara mindre än slutposition.",
     "File not found." : "Filen hittades inte.",
     "Checksum" : "Checksumma",
     "Creating a hash checksum of a file." : "Skapar en hash-checksumma för filen.",
     "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button." : "Tillåter användare att skapa en hash-checksumma för en fil.\n        Möjliga algoritmer är md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 och crc32.\n\n        Öppna detaljvyn för filen (sidopanelen). Där finns en ny flik som heter \"Checksumma\".\n        Välj en algoritm och den kommer att försöka generera en hash.\nOm du vill ha en annan algoritm klickar du bara på ladda om-knappen.",
     "Hash copied to clipboard." : "Hash kopierad till urklipp.",
-    "Choose Algorithm" : "Välj algoritm"
+    "Start Byte" : "Startposition",
+    "End Byte" : "Slutposition",
+    "e.g., 0" : "t.ex. 0",
+    "e.g., 1024" : "t.ex. 1024",
+    "Advanced: Byte Range" : "Avancerat: Positionsintervall",
+    "Hide Byte Range" : "Dölj positionsintervall",
+    "Choose Algorithm" : "Välj algoritm",
+    "Start byte must be a valid number." : "Startposition måste vara ett giltigt tal.",
+    "End byte must be a valid number." : "Slutposition måste vara ett giltigt tal.",
+    "Error calculating checksum." : "Fel vid beräkning av kontrollsumma."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
