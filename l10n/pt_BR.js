@@ -4,6 +4,7 @@ OC.L10N.register(
     "The algorithm type \"%s\" is not a valid or supported algorithm type." : "O tipo de algoritmo \"%s\" não é um tipo de algoritmo válido ou compatível.",
     "Start byte must be 0 or greater." : "O byte inicial deve ser 0 ou maior.",
     "End byte must be 0 or greater." : "O byte final deve ser 0 ou maior.",
+    "Start byte must be less than end byte." : "O byte inicial deve ser menor que o byte final.",
     "File not found." : "Arquivo não encontrado.",
     "Checksum" : "Checksum",
     "Creating a hash checksum of a file." : "Criando uma soma de verificação hash de um arquivo.",
@@ -17,6 +18,7 @@ OC.L10N.register(
     "Hide Byte Range" : "Ocultar Intervalo de Bytes",
     "Choose Algorithm" : "Escolha Algoritmo",
     "Start byte must be a valid number." : "O byte inicial deve ser um número válido.",
-    "End byte must be a valid number." : "O byte final deve ser um número válido."
+    "End byte must be a valid number." : "O byte final deve ser um número válido.",
+    "Error calculating checksum." : "Erro ao calcular a soma de verificação."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
