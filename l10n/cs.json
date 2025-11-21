@@ -1,10 +1,19 @@
 { "translations": {
     "The algorithm type \"%s\" is not a valid or supported algorithm type." : "Algoritmus typu „%s“ není platným nebo podporovaným typem algoritmu.",
+    "Start byte must be 0 or greater." : "Je třeba, aby počáteční bajt byl 0 nebo vyšší.",
+    "End byte must be 0 or greater." : "Je třeba, aby koncový bajt byl 0 nebo vyšší.",
     "File not found." : "Soubor nenalezen.",
     "Checksum" : "Kontrolní součet",
     "Creating a hash checksum of a file." : "Vytváří se otisk kontrolního součtu souboru.",
     "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button." : "Umožňuje uživatelům vytvářet otisky kontrolních součtů a vytvářet tak kontrolní součty souborů.\n        Možné algoritmy jsou md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 a crc32.\n\n        Stačí pouze otevřít zobrazení podrobností o souboru (postranní panel). Měla by se zde nacházet nová karta nazvaná „Kontrolní součet“\n        Vyberte algoritmus a pokusí se vytvořit otisk.\n        Pokud chcete použít jiný algoritmus, stačí kliknout na tlačítko „Načíst znovu“.",
     "Hash copied to clipboard." : "Otisk zkopírován do schránky.",
-    "Choose Algorithm" : "Zvolte algoritmus"
+    "Start Byte" : "Počáteční bajt",
+    "End Byte" : "Koncový bajt",
+    "e.g., 0" : "např. 0",
+    "e.g., 1024" : "např. 1024",
+    "Advanced: Byte Range" : "Pokročilé: rozsah bajtů",
+    "Hide Byte Range" : "Skrýt rozsah bajtů",
+    "Choose Algorithm" : "Zvolte algoritmus",
+    "Error calculating checksum." : "Chyba při vypočítávání kontrolního součtu."
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }
