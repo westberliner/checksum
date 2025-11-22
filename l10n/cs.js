@@ -4,6 +4,7 @@ OC.L10N.register(
     "The algorithm type \"%s\" is not a valid or supported algorithm type." : "Algoritmus typu „%s“ není platným nebo podporovaným typem algoritmu.",
     "Start byte must be 0 or greater." : "Je třeba, aby počáteční bajt byl 0 nebo vyšší.",
     "End byte must be 0 or greater." : "Je třeba, aby koncový bajt byl 0 nebo vyšší.",
+    "Start byte must be less than end byte." : "Je třeba, aby počáteční bajt byl nižší než ten koncový.",
     "File not found." : "Soubor nenalezen.",
     "Checksum" : "Kontrolní součet",
     "Creating a hash checksum of a file." : "Vytváří se otisk kontrolního součtu souboru.",
@@ -16,6 +17,8 @@ OC.L10N.register(
     "Advanced: Byte Range" : "Pokročilé: rozsah bajtů",
     "Hide Byte Range" : "Skrýt rozsah bajtů",
     "Choose Algorithm" : "Zvolte algoritmus",
+    "Start byte must be a valid number." : "Je třeba, aby počáteční bajt bylo platné číslo.",
+    "End byte must be a valid number." : "Je třeba, aby koncový bajt bylo platné číslo.",
     "Error calculating checksum." : "Chyba při vypočítávání kontrolního součtu."
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");
