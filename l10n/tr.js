@@ -2,11 +2,23 @@ OC.L10N.register(
     "checksum",
     {
     "The algorithm type \"%s\" is not a valid or supported algorithm type." : "\"%s\" algoritma türü geçersiz ya da desteklenmiyor.",
+    "Start byte must be 0 or greater." : "Başlangıç baytı 0 ya da daha büyük bir değer olmalıdır.",
+    "End byte must be 0 or greater." : "Bitiş baytı 0 ya da daha büyük bir değer olmalıdır.",
+    "Start byte must be less than end byte." : "Başlangıç baytı bitiş baytından küçük bir değer olmalıdır.",
     "File not found." : "Dosya bulunamadı.",
     "Checksum" : "Sağlama",
     "Creating a hash checksum of a file." : "Bir dosyanın karma sağlaması oluşturuluyor.",
     "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button." : "Kullanıcıların bir dosya karmasının sağlamasını oluşturmasını sağlar.\n        Kullanılabilecek algoritmalar: md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 ve crc32.\n\n        Bir dosyanın ayrıntılarını açtıktan sonra (kenar çubuğundan).  \"Sağlama\" sekmesini görmelisiniz.\n        Bir algoritma seçtiğinizde karma oluşturulmaya çalışılır.\n        Başka bir algoritma kullanmak isterseniz yeniden yükle düğmesine tıklayın.",
     "Hash copied to clipboard." : "Karma panoya kopyalandı.",
-    "Choose Algorithm" : "Algoritma seçin"
+    "Start Byte" : "Başlangıç baytı",
+    "End Byte" : "Bitiş baytı",
+    "e.g., 0" : "Örnek: 0",
+    "e.g., 1024" : "Örnek: 1024",
+    "Advanced: Byte Range" : "Gelişmiş: Bayt aralığı",
+    "Hide Byte Range" : "Bayt aralığını gizle",
+    "Choose Algorithm" : "Algoritma seçin",
+    "Start byte must be a valid number." : "Başlangıç baytı geçerli bir sayı olmalıdır.",
+    "End byte must be a valid number." : "Bitiş baytı geçerli bir sayı olmalıdır.",
+    "Error calculating checksum." : "Sağlama hesaplanırken sorun çıktı."
 },
 "nplurals=2; plural=(n > 1);");
