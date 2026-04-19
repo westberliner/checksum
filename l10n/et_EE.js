@@ -1,12 +1,24 @@
 OC.L10N.register(
     "checksum",
     {
-    "The algorithm type \"%s\" is not a valid or supported algorithm type." : "Algoritmi tüüp \"%s\" ei ole korrektne ega toetatud algoritmi tüüp.",
+    "The algorithm type \"%s\" is not a valid or supported algorithm type." : "Algoritmi tüüp „%s“ ei ole korrektne ega toetatud algoritmi tüüp.",
+    "Start byte must be 0 or greater." : "Esimene bait peab olema 0 või sellest suurem number.",
+    "End byte must be 0 or greater." : "Viimane bait peab olema 0 või sellest suurem number.",
+    "Start byte must be less than end byte." : "Esimene bait peab olema viimasest baidist väiksem.",
     "File not found." : "Faili ei leitud.",
     "Checksum" : "Kontrollsumma",
     "Creating a hash checksum of a file." : "Faili kontrollräsi arvutamine.",
-    "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button." : "Võimaldab kasutajatel luua failist räsi kontrollsumma.\nVõimalikud algoritmid on md5, sha1, sha256, sha384, sha512, sha3-256, sh3-512 ja crc32.\nLihtsalt ava faili detailide vaade (külgriba). Seal peaks olema uus vahekaart \"Kontrollsumma\".\nVali algoritm ja see proovib genereerida räsi.\nKui soovid teist algoritmi, siis kliki värskenda nuppu.",
-    "Hash copied to clipboard." : "Räsi kopeeritud lõikelauale.",
-    "Choose Algorithm" : "Vali algoritm"
+    "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button." : "Võimaldab kasutajatel luua failist räsi kontrollsumma.\nVõimalikud algoritmid on md5, sha1, sha256, sha384, sha512, sha3-256, sh3-512 ja crc32.\nLihtsalt ava faili detailide vaade (külgriba). Seal peaks olema uus vahekaart „Kontrollsumma“.\nVali algoritm ja see proovib arvutada vastava räsi.\nKui soovid teist algoritmi, siis kliki värskenda nuppu.",
+    "Hash copied to clipboard." : "Räsi on kopeeritud lõikelauale.",
+    "Start Byte" : "Esimene bait",
+    "End Byte" : "Viimane bait",
+    "e.g., 0" : "nt. 0",
+    "e.g., 1024" : "nt 1924",
+    "Advanced: Byte Range" : "Täiendav seadistus: baidivahemik",
+    "Hide Byte Range" : "Peida baitide vahemik",
+    "Choose Algorithm" : "Vali algoritm",
+    "Start byte must be a valid number." : "Esimene bait peab olema korrektne number.",
+    "End byte must be a valid number." : "Viimane bait peab olema korrektne number.",
+    "Error calculating checksum." : "Viga kontrollsumma arvutamisel."
 },
 "nplurals=2; plural=(n != 1);");

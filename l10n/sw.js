@@ -2,11 +2,23 @@ OC.L10N.register(
     "checksum",
     {
     "The algorithm type \"%s\" is not a valid or supported algorithm type." : "Aina ya algoriti \"%s\" si aina ya algoriti halali au inayotumika.",
+    "Start byte must be 0 or greater." : "Byte ya kuanzia lazima iwe 0 au kubwa zaidi",
+    "End byte must be 0 or greater." : "Byte ya kumalizia lazima iwe 0 au kubwa zaidi",
+    "Start byte must be less than end byte." : "Byte ya kuanzia lazima iwe ndogo ya byte ya kumalizia",
     "File not found." : "Faili halipo",
     "Checksum" : "Hundi",
     "Creating a hash checksum of a file." : "Inatengeneza hundi ya hash ya faili",
     "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button." : "Inaruhusu watumiaji kuunda hundi ya hash ya faili.\nAlgorithms zinazowezekana ni md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 na crc32.\n\nFungua tu mtazamo wa maelezo ya faili (Sidebar). Lazima kuwe na tabo mpya inayoitwa \"Checksum\".\nChagua algorithm na itajaribu kutoa heshi.\nIkiwa unataka algorithm nyingine, bonyeza tu kwenye kitufe cha kupakia upya.",
     "Hash copied to clipboard." : "Hash imenakiliwa kwenye ubao wa kunakili",
-    "Choose Algorithm" : "Chagua Algorithm"
+    "Start Byte" : "Byte ya kuanzia",
+    "End Byte" : "Byte ya kumalizia",
+    "e.g., 0" : "e.g., 0",
+    "e.g., 1024" : "e.g., 1024",
+    "Advanced: Byte Range" : "Ya juu: Safu ya Byte",
+    "Hide Byte Range" : "Ficha Safu ya Byte",
+    "Choose Algorithm" : "Chagua Algorithm",
+    "Start byte must be a valid number." : "Byte ya kuanzia lazima iwe nambari halali.",
+    "End byte must be a valid number." : "Byte ya kumalizia lazima iwe nambari halali.",
+    "Error calculating checksum." : "Hitilafu katika kuhesabu hundi."
 },
 "nplurals=2; plural=(n != 1);");
