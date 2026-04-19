@@ -19,83 +19,26 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import { createApp, type App } from "vue";
+import { getSidebar, FileType } from "@nextcloud/files";
+import { defineCustomElement } from "vue";
 import { translate as t } from "@nextcloud/l10n";
-import ChecksumTab from "./views/ChecksumTab.vue";
-import type { FileInfo } from "./types";
+import ChecksumTabComponent from "./views/ChecksumTab.vue";
 
-// Define the sidebar tab configuration
-interface SidebarTabConfig {
-  id: string;
-  name: string;
-  icon: string;
-  mount: (el: HTMLElement, fileInfo: FileInfo, context: unknown) => void;
-  update: (fileInfo: FileInfo) => void;
-  destroy: () => void;
-  enabled: (fileInfo: FileInfo) => boolean;
-}
+const HASH_ICON =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 3L7.5 21H9.5L11.5 3H9.5M15.5 3L13.5 21H15.5L17.5 3H15.5M4 8V10H20V8H4M4 14V16H20V14H4Z"/></svg>';
 
-// Define the sidebar tab interface
-interface SidebarTab {
-  id: string;
-  name: string;
-  icon: string;
-  mount: (el: HTMLElement, fileInfo: FileInfo, context: unknown) => void;
-  update: (fileInfo: FileInfo) => void;
-  destroy: () => void;
-  enabled: (fileInfo: FileInfo) => boolean;
-}
-
-// Extend global Window interface
-declare global {
-  interface Window {
-    OCA: {
-      Files?: {
-        Sidebar?: {
-          Tab: new (config: SidebarTabConfig) => SidebarTab;
-          registerTab: (tab: SidebarTab) => void;
-        };
-      };
-    };
-  }
-}
-
-// Define the ChecksumTab component instance type
-interface ChecksumTabInstance {
-  update: (fileInfo: FileInfo) => void;
-}
-
-let tabApp: App<Element> | null = null;
-let tabVm: ChecksumTabInstance | null = null;
-
-window.addEventListener("DOMContentLoaded", () => {
-  if (window.OCA?.Files?.Sidebar) {
-    const checksumTab = new window.OCA.Files.Sidebar.Tab({
-      id: "checksum",
-      name: t("checksum", "Checksum"),
-      icon: "icon-category-auth",
-
-      mount(el: HTMLElement, fileInfo: FileInfo): void {
-        // Destroy old tab if present
-        tabApp?.unmount();
-
-        tabApp = createApp(ChecksumTab);
-        const vm = tabApp.mount(el) as unknown as ChecksumTabInstance;
-        tabVm = vm;
-        tabVm.update(fileInfo);
-      },
-      update(fileInfo: FileInfo): void {
-        tabVm?.update(fileInfo);
-      },
-      destroy(): void {
-        tabApp?.unmount();
-        tabApp = null;
-        tabVm = null;
-      },
-      enabled(fileInfo: FileInfo): boolean {
-        return fileInfo.type === "file";
-      },
+getSidebar().registerTab({
+  id: "checksum",
+  displayName: t("checksum", "Checksum"),
+  iconSvgInline: HASH_ICON,
+  order: 50,
+  tagName: "checksum-files-sidebar-tab",
+  enabled: ({ node }) => node.type === FileType.File,
+  onInit() {
+    const ChecksumTabElement = defineCustomElement(ChecksumTabComponent, {
+      shadowRoot: false,
     });
-    window.OCA.Files.Sidebar.registerTab(checksumTab);
-  }
+    customElements.define("checksum-files-sidebar-tab", ChecksumTabElement);
+    return Promise.resolve();
+  },
 });

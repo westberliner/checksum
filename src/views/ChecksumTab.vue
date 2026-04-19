@@ -89,17 +89,23 @@
 </template>
 
 <script setup lang="ts">
+import { watch } from "vue";
 import { translate as t } from "@nextcloud/l10n";
 import { NcLoadingIcon, NcSelect, NcTextField, NcButton } from "@nextcloud/vue";
+import type { INode } from "@nextcloud/files";
 import { useChecksum } from "@/composables/useChecksum";
 import { useByteRange } from "@/composables/useByteRange";
 import { useClipboard } from "@/composables/useClipboard";
-// eslint-disable-next-line
-import type { Algorithm, FileInfo } from "@/types";
+import type { Algorithm } from "@/types";
 
 defineOptions({
   name: "ChecksumTab",
 });
+
+const props = defineProps<{
+  node: INode;
+  active: boolean;
+}>();
 
 const {
   loading,
@@ -108,7 +114,6 @@ const {
   algorithms,
   fetchChecksum,
   resetChecksum,
-  setFileInfo,
 } = useChecksum();
 
 const {
@@ -134,14 +139,7 @@ const byteEndPlaceholder = t("checksum", "e.g., 1024");
 const showByteRangeLabel = t("checksum", "Advanced: Byte Range");
 const hideByteRangeLabel = t("checksum", "Hide Byte Range");
 
-/**
- * Update current fileInfo and fetch new data.
- * @param info
- */
-const update = (info: FileInfo): void => {
-  resetState();
-  setFileInfo(info);
-};
+watch(() => props.node, () => resetState(), { immediate: true });
 
 /**
  * Handles selection change event by triggering hash ajax call.
@@ -163,12 +161,13 @@ const onAlgorithmChangeHandler = async (
  * @param algorithmType
  */
 const calculateChecksum = async (algorithmType: string): Promise<void> => {
-  if (!validateByteRange()) {
+  if (!props.node || !validateByteRange()) {
     return;
   }
 
   try {
     await fetchChecksum(
+      props.node.path,
       algorithmType,
       parsedByteStart.value,
       parsedByteEnd.value,
@@ -218,9 +217,6 @@ const resetState = (): void => {
   resetCopied();
 };
 
-defineExpose({
-  update,
-});
 </script>
 
 <style lang="scss" scoped>

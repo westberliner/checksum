@@ -1,8 +1,10 @@
 <?php
 
-/**
- * adding route for ajax callback
- */
-return ['routes' => [
-	['name' => 'checksum#check', 'url' => '/check', 'verb' => 'GET']
-]];
+return [
+	'routes' => [
+		['name' => 'checksum#check', 'url' => '/check', 'verb' => 'GET'],
+	],
+	'ocs' => [
+		['name' => 'checksumApi#compute', 'url' => '/api/v1/checksum', 'verb' => 'GET'],
+	],
+];

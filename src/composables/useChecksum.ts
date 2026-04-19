@@ -24,7 +24,7 @@ import { generateUrl } from "@nextcloud/router";
 import { translate as t } from "@nextcloud/l10n";
 import axios, { type AxiosError } from "@nextcloud/axios";
 import algorithms from "@/Model/Algorithms";
-import type { Algorithm, FileInfo, ChecksumResponse } from "@/types";
+import type { Algorithm, ChecksumResponse } from "@/types";
 
 export interface UseChecksumReturn {
   loading: Ref<boolean>;
@@ -32,33 +32,21 @@ export interface UseChecksumReturn {
   algorithm: Ref<Algorithm>;
   algorithms: Algorithm[];
   fetchChecksum: (
+    path: string,
     algorithmType: string,
     byteStart?: number | null,
     byteEnd?: number | null,
   ) => Promise<string>;
   resetChecksum: () => void;
-  setFileInfo: (info: FileInfo) => void;
 }
 
-/**
- * Composable for checksum calculation and validation
- */
 export function useChecksum(): UseChecksumReturn {
-  // State
   const loading = ref<boolean>(false);
   const hash = ref<string>("");
   const algorithm = ref<Algorithm>(algorithms[0] as Algorithm);
-  const fileInfo = ref<FileInfo | null>(null);
 
-  /**
-   * Fetches the checksum from the server.
-   * @param algorithmType - The hash algorithm type.
-   * @param byteStart - Optional start byte offset.
-   * @param byteEnd - Optional end byte offset.
-   * @return The calculated hash.
-   * @throws Error if the request fails.
-   */
   const fetchChecksum = async (
+    path: string,
     algorithmType: string,
     byteStart: number | null = null,
     byteEnd: number | null = null,
@@ -67,11 +55,10 @@ export function useChecksum(): UseChecksumReturn {
 
     const url = generateUrl("/apps/checksum/check");
     const params: Record<string, string | number> = {
-      source: `${fileInfo.value?.path}/${fileInfo.value?.name}`,
+      source: path,
       type: algorithmType,
     };
 
-    // Add byte range parameters if they are set
     if (byteStart !== null) {
       params.byteStart = byteStart;
     }
@@ -95,33 +82,18 @@ export function useChecksum(): UseChecksumReturn {
     }
   };
 
-  /**
-   * Reset the checksum state.
-   */
   const resetChecksum = (): void => {
     loading.value = false;
     algorithm.value = algorithms[0] as Algorithm;
     hash.value = "";
   };
 
-  /**
-   * Update the file info.
-   * @param info - The file info object.
-   */
-  const setFileInfo = (info: FileInfo): void => {
-    fileInfo.value = info;
-  };
-
   return {
-    // State
     loading,
     hash,
     algorithm,
     algorithms,
-
-    // Methods
     fetchChecksum,
     resetChecksum,
-    setFileInfo,
   };
 }

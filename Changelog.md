@@ -1,5 +1,12 @@
 # Changelog
 
+**2.1.0**
+
+- Migrated sidebar tab registration to new `@nextcloud/files` API (NC 33+)
+- Replaced legacy `window.OCA.Files.Sidebar` with `getSidebar().registerTab()` and web components
+- Updated min-version to 33 in info.xml
+- implemented checksum api endpoint see API.md for more
+
 **2.0.3**
 - fixes
 
