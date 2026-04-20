@@ -37,6 +37,8 @@ print_warning() {
     echo -e "${YELLOW}⚠${NC} $1"
 }
 
+rm ../checksum.tar.gz
+
 # Change to project root
 cd "$(dirname "$0")/.."
 

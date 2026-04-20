@@ -1,0 +1,37 @@
+name: Claude — Implement Enhancement
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  implement:
+    if: github.event.label.name == 'enhancement'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+
+    steps:
+      - uses: anthropics/claude-code-action@v1
+        env:
+          ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL }}
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_args: "--max-turns 15"
+          prompt: |
+            Implement the feature described in issue #${{ github.event.issue.number }}:
+
+            Title: ${{ github.event.issue.title }}
+
+            Body:
+            ${{ github.event.issue.body }}
+
+            Steps:
+            1. Create branch: enhancement/${{ github.event.issue.number }}-<slug>
+            2. Implement the feature following CLAUDE.md conventions
+            3. Run `npm run deploy` — fix any errors until it passes
+            4. Open a PR titled "feat(#${{ github.event.issue.number }}): ${{ github.event.issue.title }}"
+               with body "Closes #${{ github.event.issue.number }}"
+            5. Comment on the issue with the PR link
