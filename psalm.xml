@@ -10,11 +10,17 @@
 >
 	<projectFiles>
 		<directory name="lib"/>
+		<directory name="vendor/nextcloud/ocp"/>
 		<ignoreFiles>
 			<directory name="vendor"/>
 			<directory name="tests"/>
 		</ignoreFiles>
 	</projectFiles>
+	<stubs>
+		<file name="stubs/OC/User/NoUserException.php"/>
+		<file name="stubs/OC/Hooks/Emitter.php"/>
+		<file name="stubs/OCA/Files/Event/LoadSidebar.php"/>
+	</stubs>
 	<issueHandlers>
 		<UndefinedDocblockClass>
 			<errorLevel type="suppress">

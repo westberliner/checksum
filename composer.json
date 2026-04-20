@@ -26,7 +26,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "OCA\\Checksum\\": "lib/"
+      "OCA\\Checksum\\": "lib/",
+      "OCP\\": "vendor/nextcloud/ocp/OCP/"
     }
   },
   "minimum-stability": "stable",

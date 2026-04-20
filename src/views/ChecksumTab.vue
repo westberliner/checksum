@@ -112,6 +112,7 @@ const {
   hash,
   algorithm,
   algorithms,
+  setFileInfo,
   fetchChecksum,
   resetChecksum,
 } = useChecksum();
@@ -139,7 +140,11 @@ const byteEndPlaceholder = t("checksum", "e.g., 1024");
 const showByteRangeLabel = t("checksum", "Advanced: Byte Range");
 const hideByteRangeLabel = t("checksum", "Hide Byte Range");
 
-watch(() => props.node, () => resetState(), { immediate: true });
+watch(
+  () => props.node,
+  () => resetState(),
+  { immediate: true },
+);
 
 /**
  * Handles selection change event by triggering hash ajax call.
@@ -165,9 +170,14 @@ const calculateChecksum = async (algorithmType: string): Promise<void> => {
     return;
   }
 
+  setFileInfo({
+    path: props.node.dirname,
+    name: props.node.basename,
+    mimetype: props.node.mime,
+  });
+
   try {
     await fetchChecksum(
-      props.node.path,
       algorithmType,
       parsedByteStart.value,
       parsedByteEnd.value,
@@ -216,7 +226,6 @@ const resetState = (): void => {
   resetByteRange();
   resetCopied();
 };
-
 </script>
 
 <style lang="scss" scoped>

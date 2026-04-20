@@ -42,13 +42,11 @@ class ChecksumApiController extends OCSController {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 *
-	 * @param string $path      file path relative to the user's home folder
+	 * @param string $path file path relative to the user's home folder
 	 * @param string $algorithm hash algorithm (md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512, crc32, crc32b)
 	 * @param int|null $byteStart optional start byte offset for partial hashing
-	 * @param int|null $byteEnd   optional end byte offset for partial hashing
-	 * @return DataResponse<Http::STATUS_OK, array{checksum: string, algorithm: string, path: string}, array{}>
-	 *       | DataResponse<Http::STATUS_BAD_REQUEST, array{error: string}, array{}>
-	 *       | DataResponse<Http::STATUS_NOT_FOUND, array{error: string}, array{}>
+	 * @param int|null $byteEnd optional end byte offset for partial hashing
+	 * @return DataResponse<Http::STATUS_OK, array{checksum: string, algorithm: string, path: string}, array{}>|DataResponse<Http::STATUS_BAD_REQUEST, array{error: string}, array{}>|DataResponse<Http::STATUS_NOT_FOUND, array{error: string}, array{}>
 	 */
 	#[NoAdminRequired]
 	#[NoCSRFRequired]

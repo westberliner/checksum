@@ -5,14 +5,11 @@ declare(strict_types=1);
 namespace OCA\Checksum\Tests\Unit\Controller;
 
 use OCA\Checksum\Controller\ChecksumController;
+use OCA\Checksum\Service\ChecksumService;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\Files\File;
-use OCP\Files\Folder;
-use OCP\Files\IRootFolder;
+use OCP\Files\NotPermittedException;
 use OCP\IL10N;
 use OCP\IRequest;
-use OCP\IUser;
-use OCP\IUserSession;
 use OCP\L10N\IFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -25,12 +22,8 @@ class ChecksumControllerTest extends TestCase {
 	private $languageFactory;
 	/** @var IL10N|MockObject */
 	private $l10n;
-	/** @var IRootFolder|MockObject */
-	private $rootFolder;
-	/** @var IUserSession|MockObject */
-	private $userSession;
-	/** @var IUser|MockObject */
-	private $user;
+	/** @var ChecksumService|MockObject */
+	private $checksumService;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -38,9 +31,7 @@ class ChecksumControllerTest extends TestCase {
 		$this->request = $this->createMock(IRequest::class);
 		$this->languageFactory = $this->createMock(IFactory::class);
 		$this->l10n = $this->createMock(IL10N::class);
-		$this->rootFolder = $this->createMock(IRootFolder::class);
-		$this->userSession = $this->createMock(IUserSession::class);
-		$this->user = $this->createMock(IUser::class);
+		$this->checksumService = $this->createMock(ChecksumService::class);
 
 		$this->languageFactory
 			->method('get')
@@ -56,12 +47,13 @@ class ChecksumControllerTest extends TestCase {
 			'checksum',
 			$this->request,
 			$this->languageFactory,
-			$this->rootFolder,
-			$this->userSession
+			$this->checksumService,
 		);
 	}
 
 	public function testCheckWithInvalidAlgorithm(): void {
+		$this->checksumService->method('isValidAlgorithm')->willReturn(false);
+
 		$response = $this->controller->check('/test.txt', 'invalid_algo');
 
 		$this->assertInstanceOf(JSONResponse::class, $response);
@@ -71,6 +63,8 @@ class ChecksumControllerTest extends TestCase {
 	}
 
 	public function testCheckWithNegativeStartByte(): void {
+		$this->checksumService->method('isValidAlgorithm')->willReturn(true);
+
 		$response = $this->controller->check('/test.txt', 'md5', -1);
 
 		$this->assertInstanceOf(JSONResponse::class, $response);
@@ -80,6 +74,8 @@ class ChecksumControllerTest extends TestCase {
 	}
 
 	public function testCheckWithNegativeEndByte(): void {
+		$this->checksumService->method('isValidAlgorithm')->willReturn(true);
+
 		$response = $this->controller->check('/test.txt', 'md5', 0, -1);
 
 		$this->assertInstanceOf(JSONResponse::class, $response);
@@ -89,6 +85,8 @@ class ChecksumControllerTest extends TestCase {
 	}
 
 	public function testCheckWithInvalidByteRange(): void {
+		$this->checksumService->method('isValidAlgorithm')->willReturn(true);
+
 		$response = $this->controller->check('/test.txt', 'md5', 100, 50);
 
 		$this->assertInstanceOf(JSONResponse::class, $response);
@@ -98,9 +96,8 @@ class ChecksumControllerTest extends TestCase {
 	}
 
 	public function testCheckWithNoUser(): void {
-		$this->userSession
-			->method('getUser')
-			->willReturn(null);
+		$this->checksumService->method('isValidAlgorithm')->willReturn(true);
+		$this->checksumService->method('computeHash')->willThrowException(new NotPermittedException('No authenticated user'));
 
 		$response = $this->controller->check('/test.txt', 'md5');
 
@@ -114,25 +111,8 @@ class ChecksumControllerTest extends TestCase {
 		$testContent = 'Hello, World!';
 		$expectedMd5 = md5($testContent);
 
-		// Create a temporary file
-		$tmpFile = tmpfile();
-		fwrite($tmpFile, $testContent);
-		rewind($tmpFile);
-
-		// Mock user
-		$this->user->method('getUID')->willReturn('testuser');
-		$this->userSession->method('getUser')->willReturn($this->user);
-
-		// Mock file and folder
-		$file = $this->createMock(File::class);
-		$file->method('getType')->willReturn(\OCP\Files\FileInfo::TYPE_FILE);
-		$file->method('fopen')->willReturn($tmpFile);
-		$file->method('getSize')->willReturn(strlen($testContent));
-
-		$folder = $this->createMock(Folder::class);
-		$folder->method('get')->willReturn($file);
-
-		$this->rootFolder->method('getUserFolder')->willReturn($folder);
+		$this->checksumService->method('isValidAlgorithm')->willReturn(true);
+		$this->checksumService->method('computeHash')->willReturn($expectedMd5);
 
 		$response = $this->controller->check('/test.txt', 'md5');
 
@@ -146,25 +126,8 @@ class ChecksumControllerTest extends TestCase {
 		$testContent = 'Test content for SHA-256';
 		$expectedHash = hash('sha256', $testContent);
 
-		// Create a temporary file
-		$tmpFile = tmpfile();
-		fwrite($tmpFile, $testContent);
-		rewind($tmpFile);
-
-		// Mock user
-		$this->user->method('getUID')->willReturn('testuser');
-		$this->userSession->method('getUser')->willReturn($this->user);
-
-		// Mock file and folder
-		$file = $this->createMock(File::class);
-		$file->method('getType')->willReturn(\OCP\Files\FileInfo::TYPE_FILE);
-		$file->method('fopen')->willReturn($tmpFile);
-		$file->method('getSize')->willReturn(strlen($testContent));
-
-		$folder = $this->createMock(Folder::class);
-		$folder->method('get')->willReturn($file);
-
-		$this->rootFolder->method('getUserFolder')->willReturn($folder);
+		$this->checksumService->method('isValidAlgorithm')->willReturn(true);
+		$this->checksumService->method('computeHash')->willReturn($expectedHash);
 
 		$response = $this->controller->check('/test.txt', 'sha256');
 
@@ -180,25 +143,8 @@ class ChecksumControllerTest extends TestCase {
 		$rangeEnd = 10;
 		$expectedHash = hash('md5', substr($testContent, $rangeStart, $rangeEnd - $rangeStart));
 
-		// Create a temporary file
-		$tmpFile = tmpfile();
-		fwrite($tmpFile, $testContent);
-		rewind($tmpFile);
-
-		// Mock user
-		$this->user->method('getUID')->willReturn('testuser');
-		$this->userSession->method('getUser')->willReturn($this->user);
-
-		// Mock file and folder
-		$file = $this->createMock(File::class);
-		$file->method('getType')->willReturn(\OCP\Files\FileInfo::TYPE_FILE);
-		$file->method('fopen')->willReturn($tmpFile);
-		$file->method('getSize')->willReturn(strlen($testContent));
-
-		$folder = $this->createMock(Folder::class);
-		$folder->method('get')->willReturn($file);
-
-		$this->rootFolder->method('getUserFolder')->willReturn($folder);
+		$this->checksumService->method('isValidAlgorithm')->willReturn(true);
+		$this->checksumService->method('computeHash')->willReturn($expectedHash);
 
 		$response = $this->controller->check('/test.txt', 'md5', $rangeStart, $rangeEnd);
 

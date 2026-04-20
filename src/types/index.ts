@@ -30,6 +30,7 @@ export interface FileInfo {
   name: string;
   size?: number;
   type?: string;
+  mimetype?: string;
 }
 
 export interface ChecksumResponse {

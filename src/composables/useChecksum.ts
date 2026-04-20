@@ -24,15 +24,15 @@ import { generateUrl } from "@nextcloud/router";
 import { translate as t } from "@nextcloud/l10n";
 import axios, { type AxiosError } from "@nextcloud/axios";
 import algorithms from "@/Model/Algorithms";
-import type { Algorithm, ChecksumResponse } from "@/types";
+import type { Algorithm, ChecksumResponse, FileInfo } from "@/types";
 
 export interface UseChecksumReturn {
   loading: Ref<boolean>;
   hash: Ref<string>;
   algorithm: Ref<Algorithm>;
   algorithms: Algorithm[];
+  setFileInfo: (info: FileInfo) => void;
   fetchChecksum: (
-    path: string,
     algorithmType: string,
     byteStart?: number | null,
     byteEnd?: number | null,
@@ -40,22 +40,32 @@ export interface UseChecksumReturn {
   resetChecksum: () => void;
 }
 
+/**
+ *
+ */
 export function useChecksum(): UseChecksumReturn {
   const loading = ref<boolean>(false);
   const hash = ref<string>("");
   const algorithm = ref<Algorithm>(algorithms[0] as Algorithm);
+  const fileInfo = ref<FileInfo | null>(null);
+
+  const setFileInfo = (info: FileInfo): void => {
+    fileInfo.value = info;
+  };
 
   const fetchChecksum = async (
-    path: string,
     algorithmType: string,
     byteStart: number | null = null,
     byteEnd: number | null = null,
   ): Promise<string> => {
     loading.value = true;
 
+    const info = fileInfo.value;
+    const source = info ? `${info.path}/${info.name}` : "";
+
     const url = generateUrl("/apps/checksum/check");
     const params: Record<string, string | number> = {
-      source: path,
+      source,
       type: algorithmType,
     };
 
@@ -93,6 +103,7 @@ export function useChecksum(): UseChecksumReturn {
     hash,
     algorithm,
     algorithms,
+    setFileInfo,
     fetchChecksum,
     resetChecksum,
   };

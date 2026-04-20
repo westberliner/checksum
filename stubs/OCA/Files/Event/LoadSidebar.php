@@ -1,0 +1,10 @@
+<?php
+
+declare(strict_types=1);
+
+namespace OCA\Files\Event;
+
+use OCP\EventDispatcher\Event;
+
+class LoadSidebar extends Event {
+}

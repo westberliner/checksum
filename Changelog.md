@@ -1,5 +1,9 @@
 # Changelog
 
+**2.1.1**
+
+- fix deployment
+
 **2.1.0**
 
 - Migrated sidebar tab registration to new `@nextcloud/files` API (NC 33+)
