@@ -21,7 +21,7 @@ jobs:
           OVERRIDE_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          claude_args: "--max-turns 15"
+          claude_args: "--max-turns 30"
           prompt: |
             Implement the feature described in issue #${{ github.event.issue.number }}:
 
