@@ -1,0 +1,79 @@
+name: Publish Release
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  publish:
+    if: >
+      github.event.pull_request.merged == true &&
+      contains(github.event.pull_request.labels.*.name, 'release')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer, php-cs-fixer
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install PHP dependencies
+        run: composer install --no-progress --prefer-dist
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Read version
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Extract changelog section
+        id: changelog
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          # Pull the bullet block under **VERSION** until the next **X.Y.Z** header.
+          awk -v ver="$VERSION" '
+            $0 ~ "^\\*\\*" ver "\\*\\*" {flag=1; next}
+            flag && /^\*\*[0-9]+\.[0-9]+\.[0-9]+\*\*/ {flag=0}
+            flag {print}
+          ' Changelog.md > release-notes.md
+          echo "Release notes:"
+          cat release-notes.md
+
+      - name: Tag commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "${{ steps.version.outputs.tag }}" -m "Release ${{ steps.version.outputs.tag }}"
+          git push origin "${{ steps.version.outputs.tag }}"
+
+      - name: Build release tarball
+        run: |
+          # deploy.sh starts with `rm ../checksum.tar.gz` (no -f) — create it so the rm succeeds.
+          touch ../checksum.tar.gz
+          npm run deploy
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag }}" \
+            ../checksum.tar.gz \
+            --title "${{ steps.version.outputs.tag }}" \
+            --notes-file release-notes.md

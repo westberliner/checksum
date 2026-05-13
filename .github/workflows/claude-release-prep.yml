@@ -1,12 +1,15 @@
-name: Claude — Implement Enhancement
+name: Claude — Prepare Release
 
 on:
-  issues:
-    types: [labeled]
+  pull_request:
+    types: [closed]
 
 jobs:
-  implement:
-    if: github.event.label.name == 'enhancement'
+  prepare:
+    if: >
+      github.event.pull_request.merged == true &&
+      (contains(github.event.pull_request.labels.*.name, 'bug') ||
+       contains(github.event.pull_request.labels.*.name, 'enhancement'))
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -23,24 +26,13 @@ jobs:
 
       - uses: actions/checkout@v4
         with:
+          ref: master
+          fetch-depth: 0
           token: ${{ steps.app-token.outputs.token }}
-
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-          tools: composer, php-cs-fixer
-          coverage: none
 
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-          cache: 'npm'
-
-      - name: Install PHP dependencies
-        run: composer install --no-progress --prefer-dist
-
-      - name: Install Node dependencies
-        run: npm ci
 
       - uses: anthropics/claude-code-action@v1
         env:
@@ -48,13 +40,15 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ steps.app-token.outputs.token }}
-          claude_args: "--max-turns 80"
+          claude_args: "--max-turns 40"
           track_progress: true
           prompt: |
-            Use the `implement-enhancement` skill to handle this issue.
+            Use the `prepare-release` skill to open a release PR.
 
-            Issue: #${{ github.event.issue.number }}
-            Title: ${{ github.event.issue.title }}
+            Merged PR: #${{ github.event.pull_request.number }}
+            Title: ${{ github.event.pull_request.title }}
+            Label: ${{ contains(github.event.pull_request.labels.*.name, 'enhancement') && 'enhancement' || 'bug' }}
+            Merge SHA: ${{ github.event.pull_request.merge_commit_sha }}
 
             Body:
-            ${{ github.event.issue.body }}
+            ${{ github.event.pull_request.body }}

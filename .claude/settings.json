@@ -15,7 +15,10 @@
       "Bash(gh pr create*)",
       "Bash(gh issue comment*)",
       "Bash(gh issue edit*)",
-      "Bash(gh run *)"
+      "Bash(gh run *)",
+      "Edit(/.claude/skills/implement-enhancement/**)",
+      "Edit(/.claude/skills/fix-bug/**)",
+      "Edit(/.claude/skills/prepare-release/**)"
     ]
   }
 }

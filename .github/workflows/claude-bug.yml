@@ -15,7 +15,15 @@ jobs:
       id-token: write
 
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.CLAUDE_APP_ID }}
+          private-key: ${{ secrets.CLAUDE_APP_PRIVATE_KEY }}
+
       - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
 
       - uses: shivammathur/setup-php@v2
         with:
@@ -39,23 +47,14 @@ jobs:
           ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL }}
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ steps.app-token.outputs.token }}
           claude_args: "--max-turns 80"
           track_progress: true
           prompt: |
-            Draft a first-pass fix for the bug in issue #${{ github.event.issue.number }}
-            in this repo. Goal: open a PR I can take over — not a verified fix.
+            Use the `fix-bug` skill to handle this issue.
 
+            Issue: #${{ github.event.issue.number }}
             Title: ${{ github.event.issue.title }}
 
             Body:
             ${{ github.event.issue.body }}
-
-            How to work:
-            - Read CLAUDE.md and orient yourself in this codebase first.
-            - Locate the most likely cause in the code. Make one best-guess
-              hypothesis and commit to it — do not explore alternatives.
-            - Apply the minimal change that would fix it under that hypothesis.
-              Backend goes in lib/, frontend in src/.
-            - Do NOT run builds, tests, linters, or `npm run deploy`. Skip validation entirely.
-            - Open the PR even if unverified. State your hypothesis and what
-              I should double-check in the PR description so I can pick it up.
