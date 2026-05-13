@@ -1,0 +1,45 @@
+name: Claude — Fix Bug
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  fix:
+    if: github.event.label.name == 'bug'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: anthropics/claude-code-action@v1
+        env:
+          ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL }}
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_args: "--max-turns 60"
+          track_progress: true
+          prompt: |
+            Fix the bug described in issue #${{ github.event.issue.number }}.
+
+            Title: ${{ github.event.issue.title }}
+
+            Body:
+            ${{ github.event.issue.body }}
+
+            Approach:
+            - Reproduce the bug first (write a failing test that captures it)
+            - Identify the root cause — do not paper over symptoms
+            - Apply the minimal fix
+            - Confirm the new test passes and no existing tests regress
+
+            Follow CLAUDE.md conventions:
+            - Backend fixes: update code in lib/ with a PHPUnit regression test in tests/
+            - Frontend fixes: update src/ with a Vitest regression test
+            - Update Changelog.md under [Unreleased]
+
+            Run `npm run deploy` and fix errors until it passes before finishing.
