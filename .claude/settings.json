@@ -14,7 +14,8 @@
       "Bash(git log*)",
       "Bash(gh pr create*)",
       "Bash(gh issue comment*)",
-      "Bash(gh issue edit*)"
+      "Bash(gh issue edit*)",
+      "Bash(gh run *)"
     ]
   }
 }

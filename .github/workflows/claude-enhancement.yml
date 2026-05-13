@@ -15,25 +15,25 @@ jobs:
       id-token: write
 
     steps:
+      - uses: actions/checkout@v4
       - uses: anthropics/claude-code-action@v1
         env:
           ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL }}
-          OVERRIDE_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          claude_args: "--max-turns 30"
+          claude_args: "--max-turns 60"
+          track_progress: true
           prompt: |
-            Implement the feature described in issue #${{ github.event.issue.number }}:
+            Implement issue #${{ github.event.issue.number }}.
 
             Title: ${{ github.event.issue.title }}
 
             Body:
             ${{ github.event.issue.body }}
 
-            Steps:
-            1. Create branch: enhancement/${{ github.event.issue.number }}-<slug>
-            2. Implement the feature following CLAUDE.md conventions
-            3. Run `npm run deploy` — fix any errors until it passes
-            4. Open a PR titled "feat(#${{ github.event.issue.number }}): ${{ github.event.issue.title }}"
-               with body "Closes #${{ github.event.issue.number }}"
-            5. Comment on the issue with the PR link
+            Follow CLAUDE.md conventions:
+            - Backend changes: Controller/Service in lib/ with PHPUnit test in tests/
+            - Frontend changes: composable in src/composables/ with Vitest test
+            - Update Changelog.md under [Unreleased]
+
+            Run `npm run deploy` and fix errors until it passes before finishing.
