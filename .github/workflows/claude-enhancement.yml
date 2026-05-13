@@ -16,24 +16,46 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer, php-cs-fixer
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install PHP dependencies
+        run: composer install --no-progress --prefer-dist
+
+      - name: Install Node dependencies
+        run: npm ci
+
       - uses: anthropics/claude-code-action@v1
         env:
           ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL }}
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          claude_args: "--max-turns 60"
+          claude_args: "--max-turns 80"
           track_progress: true
           prompt: |
-            Implement issue #${{ github.event.issue.number }}.
+            Draft a first-pass implementation for issue #${{ github.event.issue.number }}
+            in this repo. Goal: open a PR I can take over — not a finished feature.
 
             Title: ${{ github.event.issue.title }}
 
             Body:
             ${{ github.event.issue.body }}
 
-            Follow CLAUDE.md conventions:
-            - Backend changes: Controller/Service in lib/ with PHPUnit test in tests/
-            - Frontend changes: composable in src/composables/ with Vitest test
-            - Update Changelog.md under [Unreleased]
-
-            Run `npm run deploy` and fix errors until it passes before finishing.
+            How to work:
+            - Read CLAUDE.md and orient yourself in this codebase first.
+            - Make your best single assumption about the approach and commit to it.
+              Do not explore multiple designs.
+            - Touch the minimum number of files needed to express the idea.
+              Backend goes in lib/, frontend in src/.
+            - Do NOT run builds, tests, linters, or `npm run deploy`. Skip validation entirely.
+            - Open the PR even if the code is incomplete. State your assumption
+              and any open questions in the PR description so I can pick it up.
