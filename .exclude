@@ -3,7 +3,10 @@
 ./stylelint.config.js
 ./vite.config.js
 ./vitest.config.ts
-./*.json
+package.json
+package-lock.json
+composer.json
+tsconfig.json
 *.log
 *.lock
 ./node_modules
