@@ -1,6 +1,6 @@
 # Changelog
 
-**[Unreleased]**
+**2.1.2**
 
 - fix(#108): include l10n/*.json translation files in release archive
 
