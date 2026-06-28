@@ -1,6 +1,9 @@
 OC.L10N.register(
     "checksum",
     {
-    "File not found." : "Ficheiro não encontrado"
+    "End byte must be 0 or greater." : "O byte final deve ser 0 ou maior.",
+    "File not found." : "Ficheiro não encontrado",
+    "e.g., 0" : "p. ex., 0",
+    "Start byte must be a valid number." : "O byte inicial deve ser um número válido."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
