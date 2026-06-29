@@ -3,7 +3,10 @@ OC.L10N.register(
     {
     "End byte must be 0 or greater." : "O byte final deve ser 0 ou maior.",
     "File not found." : "Ficheiro não encontrado",
+    "Creating a hash checksum of a file." : "Criando uma soma de verificação hash de um arquivo.",
+    "Start Byte" : "Byte Inicial",
     "e.g., 0" : "p. ex., 0",
+    "Choose Algorithm" : "Escolha Algoritmo",
     "Start byte must be a valid number." : "O byte inicial deve ser um número válido."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
