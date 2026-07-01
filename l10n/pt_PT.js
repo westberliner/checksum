@@ -2,10 +2,15 @@ OC.L10N.register(
     "checksum",
     {
     "End byte must be 0 or greater." : "O byte final deve ser 0 ou maior.",
+    "Start byte must be less than end byte." : "O byte inicial deve ser menor que o byte final.",
     "File not found." : "Ficheiro não encontrado",
+    "Checksum" : "Soma de verificação",
     "Creating a hash checksum of a file." : "Criando uma soma de verificação hash de um arquivo.",
     "Start Byte" : "Byte Inicial",
+    "End Byte" : "Byte Final",
     "e.g., 0" : "p. ex., 0",
+    "Advanced: Byte Range" : "Avançado: Intervalo de Bytes",
+    "Hide Byte Range" : "Ocultar Intervalo de Bytes",
     "Choose Algorithm" : "Escolha Algoritmo",
     "Start byte must be a valid number." : "O byte inicial deve ser um número válido."
 },
