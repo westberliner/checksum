@@ -2,6 +2,7 @@ OC.L10N.register(
     "checksum",
     {
     "The algorithm type \"%s\" is not a valid or supported algorithm type." : "O tipo de algoritmo \"%s\" não é um tipo de algoritmo válido ou compatível.",
+    "Start byte must be 0 or greater." : "O byte inicial deve ser 0 ou maior.",
     "End byte must be 0 or greater." : "O byte final deve ser 0 ou maior.",
     "Start byte must be less than end byte." : "O byte inicial deve ser menor que o byte final.",
     "File not found." : "Ficheiro não encontrado",
