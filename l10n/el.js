@@ -1,12 +1,24 @@
 OC.L10N.register(
     "checksum",
     {
-    "The algorithm type \"%s\" is not a valid or supported algorithm type." : "Ο τύπος αλγορίθμου «%s» δεν είναι έγκυρος ή υποστηριζόμενος τύπος αλγορίθμου.",
+    "The algorithm type \"%s\" is not a valid or supported algorithm type." : "Ο τύπος αλγορίθμου \"%s\" δεν είναι έγκυρος ή υποστηριζόμενος τύπος αλγορίθμου.",
+    "Start byte must be 0 or greater." : "Το byte έναρξης πρέπει να είναι 0 ή μεγαλύτερο.",
+    "End byte must be 0 or greater." : "Το byte λήξης πρέπει να είναι 0 ή μεγαλύτερο.",
+    "Start byte must be less than end byte." : "Το byte έναρξης πρέπει να είναι μικρότερο από το byte λήξης.",
     "File not found." : "Το αρχείο δεν βρέθηκε.",
     "Checksum" : "Άθροισμα ελέγχου",
     "Creating a hash checksum of a file." : "Δημιουργία αθροίσματος ελέγχου κατακερματισμού αρχείου.",
-    "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button." : "Επιτρέπει στους χρήστες να δημιουργούν ένα hash checksum ενός αρχείου.\n        Πιθανοί αλγόριθμοι είναι md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 και crc32.\n\n        Απλά ανοίξτε την προβολή λεπτομερειών του αρχείου (Πλαϊνή μπάρα). Θα πρέπει να υπάρχει μια νέα καρτέλα με το όνομα \"Checksum\".\n        Επιλέξτε έναν αλγόριθμο και θα προσπαθήσει να δημιουργήσει ένα hash.\n        Εάν θέλετε έναν άλλο αλγόριθμο, απλά κάντε κλικ στο κουμπί ανανέωσης.",
-    "Hash copied to clipboard." : "Το hash αντιγράφηκε στο πρόχειρο.",
-    "Choose Algorithm" : "Επιλογή αλγορίθμου"
+    "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button." : "Επιτρέπει στους χρήστες να δημιουργούν ένα άθροισμα ελέγχου κατακερματισμού (hash checksum) ενός αρχείου.\n        Πιθανοί αλγόριθμοι είναι md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 και crc32.\n\n        Απλά ανοίξτε την προβολή λεπτομερειών του αρχείου (Πλαϊνή μπάρα). Θα πρέπει να υπάρχει μια νέα καρτέλα με το όνομα \"Checksum\".\n        Επιλέξτε έναν αλγόριθμο και θα γίνει προσπάθεια δημιουργίας ενός κατακερματισμού (hash).\n        Εάν θέλετε έναν άλλο αλγόριθμο, απλά κάντε κλικ στο κουμπί ανανέωσης.",
+    "Hash copied to clipboard." : "Ο κατακερματισμός (hash) αντιγράφηκε στο πρόχειρο.",
+    "Start Byte" : "Byte Έναρξης",
+    "End Byte" : "Byte Λήξης",
+    "e.g., 0" : "π.χ., 0",
+    "e.g., 1024" : "π.χ., 1024",
+    "Advanced: Byte Range" : "Για προχωρημένους: Εύρος Byte",
+    "Hide Byte Range" : "Απόκρυψη Εύρους Byte",
+    "Choose Algorithm" : "Επιλογή αλγορίθμου",
+    "Start byte must be a valid number." : "Το byte έναρξης πρέπει να είναι ένας έγκυρος αριθμός.",
+    "End byte must be a valid number." : "Το byte λήξης πρέπει να είναι ένας έγκυρος αριθμός.",
+    "Error calculating checksum." : "Σφάλμα κατά τον υπολογισμό του αθροίσματος ελέγχου."
 },
 "nplurals=2; plural=(n != 1);");
