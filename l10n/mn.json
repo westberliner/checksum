@@ -1,4 +1,5 @@
 { "translations": {
-    "File not found." : "Файл олдсонгүй."
+    "File not found." : "Файл олдсонгүй.",
+    "Checksum" : "Хяналтын нийлбэр"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
