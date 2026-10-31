@@ -6,7 +6,7 @@ OC.L10N.register(
     "End byte must be 0 or greater." : "Конечный байт должен быть равен 0 или больше.",
     "Start byte must be less than end byte." : "Начальный байт должен быть меньше конечного байта.",
     "File not found." : "Файл не найден.",
-    "Checksum" : "Контр. сумма",
+    "Checksum" : "Контрольная сумма",
     "Creating a hash checksum of a file." : "Вычисление контрольной суммы файла.",
     "Allows users to create a hash checksum of a file.\n        Possible algorithms are md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 and crc32.\n\n        Just open the details view of the file (Sidebar). There should be a new tab called \"Checksum\".\n        Select a algorithm and it will try to generate a hash.\n        If you want an other algorithm, just click on the reload button." : "Позволяет пользователям вычислять контрольную сумму файла.\n        Поддерживаемые алгоритмы: md5, sha1, sha256, sha384, sha512, sha3-256, sha3-512 и crc32.\n\n        Просто откройте представление сведений о файле (боковая панель). Там будет новая вкладка под названием «Контр. сумма».\n        Выберите алгоритм — приложение вычислит хеш.\n        Если вам нужен другой алгоритм, просто нажмите на кнопку перезагрузки.",
     "Hash copied to clipboard." : "Хеш скопирован в буфер обмена.",
