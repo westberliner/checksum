@@ -1,5 +1,5 @@
 { "translations": {
-    "The algorithm type \"%s\" is not a valid or supported algorithm type." : "Typ algoritmu \"%s\" nie je platným alebo podporovaným typom algoritmu.",
+    "The algorithm type \"%s\" is not a valid or supported algorithm type." : "Algoritmus „%s“ je neplatný alebo nepodporovaný.",
     "Start byte must be 0 or greater." : "Počiatočný bajt musí byť 0 alebo väčší.",
     "End byte must be 0 or greater." : "Koncový bajt musí byť 0 alebo väčší.",
     "Start byte must be less than end byte." : "Počiatočný bajt musí byť menší ako koncový bajt.",
