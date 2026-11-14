@@ -1,7 +1,7 @@
 OC.L10N.register(
     "checksum",
     {
-    "The algorithm type \"%s\" is not a valid or supported algorithm type." : "Le type d'algorithme \"%s\" est invalide ou n'est pas un algorithme supporté.",
+    "The algorithm type \"%s\" is not a valid or supported algorithm type." : "Le type d'algorithme \"%s\" est invalide ou n'est pas un algorithme pris en charge.",
     "Start byte must be 0 or greater." : "L'octet de départ doit être égale ou supérieur à 0.",
     "End byte must be 0 or greater." : "L'octet de fin doit être égale ou supérieur à 0.",
     "Start byte must be less than end byte." : "L'octet de départ doit être inférieur à l'octet de fin.",
